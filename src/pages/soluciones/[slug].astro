@@ -1,0 +1,209 @@
+---
+import { r } from '../../lib/ruta.js';
+import Base from '../../layouts/Base.astro';
+import Icono from '../../components/Icono.astro';
+import Wordmark from '../../components/Wordmark.astro';
+import VistaProducto from '../../components/VistaProducto.astro';
+import { programas, lineas, entregables } from '../../data/programas.js';
+
+export function getStaticPaths() {
+  return lineas.map((l) => ({ params: { slug: l.slug }, props: { linea: l } }));
+}
+
+const { linea } = Astro.props;
+
+// Contenido propio de cada línea. Sale de catalogo-de-oferta (§ 2, 3 y 4).
+const detalle = {
+  conciliacion: {
+    captura:
+      'Trova y Kriba en marcha: el aviso del día y el informe de reclamación del mes, uno al lado del otro.',
+    bloques: [
+      {
+        titulo: 'Qué haces tú',
+        texto:
+          'Una vez al mes —y si quieres, cada día— nos entregas los listados que te envían las aseguradoras y la exportación de tu programa de gestión. Nada más.',
+      },
+      {
+        titulo: 'Qué hacemos nosotros',
+        texto:
+          'Trova comprueba cada día que lo facturado ayer está donde tiene que estar. Kriba cierra cada mes cruzando las liquidaciones con lo facturado y con lo pagado al médico. ArIA clasifica todas las líneas y aprende las nomenclaturas de cada aseguradora.',
+      },
+    ],
+    listaTitulo: 'Cómo se contrata',
+    lista: [
+      'Por aseguradora: se empieza por una y se van añadiendo.',
+      'O con todas a la vez, si el volumen lo pide.',
+      'El precio depende del volumen de actos y de cuántas aseguradoras. Se cierra después del piloto.',
+    ],
+    limiteTitulo: 'Lo que no incluye, hoy',
+    limite:
+      'No presentamos la reclamación ante la aseguradora en tu nombre. Te entregamos el informe listo, con el justificante de cada caso; presentarlo lo hace el centro.',
+  },
+  control: {
+    captura:
+      'Vizor en un portátil y el cuadrante de Aula en una pantalla del centro.',
+    bloques: [
+      {
+        titulo: 'Las usa tu equipo',
+        texto:
+          'A diferencia de la conciliación, estas aplicaciones no se operan desde fuera: las abre la gente del centro. El gerente mira Vizor, recepción mueve el cuadrante en Aula, administración lleva los documentos en Folia.',
+      },
+      {
+        titulo: 'Nosotros las alojamos',
+        texto:
+          'Las montamos para tu centro, con tus datos separados de los de cualquier otro, y nos encargamos del mantenimiento y del soporte. Tú no instalas nada ni administras servidores.',
+      },
+    ],
+    listaTitulo: 'Qué hace falta para ponerlas en marcha',
+    lista: [
+      'Alojarlas para tu centro, con tu espacio de datos propio.',
+      'Una formación mínima para quien las vaya a usar.',
+      'Alimentarlas con tus datos: Vizor con la exportación de tu programa de gestión; Aula, Tempo y Folia a mano o desde tu agenda.',
+    ],
+    limiteTitulo: 'Para que quede claro',
+    limite:
+      'Esto es software alojado, no servicio operado. Se paga por licencia mensual con nuestro soporte, no por lo que se recupere.',
+  },
+  medida: {
+    captura:
+      'Una app de pacientes y un panel hechos a medida para un centro, en móvil y en escritorio.',
+    bloques: [
+      {
+        titulo: 'Qué solemos hacer',
+        texto:
+          'Webs y aplicaciones para pacientes, con cita en línea. Programas especializados para un proceso que la suite no cubre. Y automatizaciones: robots que descargan listados de los portales, informes que se mandan solos, avisos.',
+      },
+      {
+        titulo: 'Cómo se encarga',
+        texto:
+          'Primero una reunión para entender el problema. Después una propuesta con el alcance y el precio cerrados. Y la entrega por fases, para que veas algo funcionando pronto y no al final.',
+      },
+    ],
+    listaTitulo: 'Cuándo decimos que sí',
+    lista: [
+      'Cuando nace de un problema real, no de una idea bonita.',
+      'Cuando se puede mantener en el tiempo.',
+      'Cuando lo que aporta compensa el trabajo que se lleva.',
+    ],
+    limiteTitulo: 'Y cuándo decimos que no',
+    limite:
+      'Si no podemos mantenerlo o si nos aparta del producto más de lo que suma, lo decimos antes de empezar y no después.',
+  },
+};
+
+const d = detalle[linea.slug];
+const suyos = programas.filter((p) => p.linea === linea.slug);
+---
+
+<Base
+  titulo={`${linea.nombre} · Haia`}
+  descripcion={linea.entradilla}
+>
+
+  <section class="seccion seccion--compacta">
+    <div class="contenedor dos-columnas">
+      <div>
+        <p class="rotulo" style="margin-bottom:1.25rem">
+          <a href={r('/#soluciones')} style="text-decoration:none;color:inherit">Soluciones</a>
+        </p>
+        <span class="etiqueta">{linea.etiqueta}</span>
+        <h1 class="titulo-xl" style="margin-top:1rem;max-width:16ch">{linea.nombre}</h1>
+        <p class="entradilla" style="margin-top:1.25rem">{linea.titular}</p>
+        <p class="texto texto--apagado" style="margin-top:1rem">{linea.entradilla}</p>
+        <div class="acciones" style="margin-top:1.75rem">
+          <a class="boton boton--principal" href={r('/#contacto')}>Hablamos</a>
+        </div>
+      </div>
+
+      <VistaProducto tipo={linea.slug} />
+    </div>
+  </section>
+
+  <section class="seccion seccion--nube">
+    <div class="contenedor">
+      <div class="rejilla rejilla--2">
+        {d.bloques.map((b) => (
+          <article class="tarjeta">
+            <h2 class="titulo-m">{b.titulo}</h2>
+            <p class="texto texto--apagado">{b.texto}</p>
+          </article>
+        ))}
+      </div>
+
+      <div class="dos-columnas" style="margin-top:2.5rem;align-items:start">
+        <div>
+          <h2 class="titulo-m">{d.listaTitulo}</h2>
+          <ul class="lista-marcada" style="margin-top:1rem">
+            {d.lista.map((t) => <li><Icono nombre="tick" tam={18} /><span>{t}</span></li>)}
+          </ul>
+        </div>
+        <div class="aviso-pendiente" style="background:var(--blanco);border-color:var(--borde);color:inherit">
+          <Icono nombre="alerta" tam={20} />
+          <span>
+            <span class="destacado">{d.limiteTitulo}.</span> {d.limite}
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {suyos.length > 0 && (
+    <section class="seccion">
+      <div class="contenedor">
+        <div class="cabeza-seccion">
+          <p class="rotulo">Los programas de esta línea</p>
+          <h2 class="titulo-l">Qué hay por debajo</h2>
+        </div>
+        <div class="rejilla rejilla--3">
+          {suyos.map((p) => (
+            <a class="tarjeta tarjeta--enlace programa-tarjeta" href={r(`/programas/${p.slug}/`)}>
+              <Wordmark programa={p} />
+              <p class="texto texto--apagado" style="font-size:0.9375rem">{p.resumenCorto}</p>
+              <div class="programa-tarjeta__pie">
+                <span class="etiqueta">{p.contratacion}</span>
+                <span class="programa-tarjeta__flecha"><Icono nombre="flecha" tam={18} /></span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {linea.slug === 'conciliacion' && (
+    <section class="seccion seccion--nube">
+      <div class="contenedor">
+        <div class="cabeza-seccion">
+          <p class="rotulo">Lo que recibes</p>
+          <h2 class="titulo-l">Cinco entregables</h2>
+        </div>
+        <div class="rejilla rejilla--5">
+          {entregables.map((e) => (
+            <article class="tarjeta entregable">
+              <span class="entregable__icono"><Icono nombre={e.icono} tam={24} /></span>
+              <div>
+                <h3 class="titulo-s">{e.titulo}</h3>
+                <p class="texto texto--apagado" style="font-size:0.875rem">{e.texto}</p>
+              </div>
+              <div class="entregable__metas">
+                <span class="meta"><Icono nombre="reloj" tam={15} /> {e.cuando}</span>
+                <span class="meta"><Icono nombre="personas" tam={15} /> {e.quien}</span>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="seccion seccion--oscura franja">
+    <div class="contenedor franja__interior">
+      <h2 class="titulo-l" style="max-width:24ch">¿Lo vemos con tu centro?</h2>
+      <p class="entradilla">Cuéntanos cómo trabajáis hoy. Cuarenta y cinco minutos.</p>
+      <div class="acciones">
+        <a class="boton boton--principal" href={r('/#contacto')}>Escríbenos</a>
+      </div>
+    </div>
+  </section>
+
+</Base>

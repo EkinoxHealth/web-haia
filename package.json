@@ -1,0 +1,15 @@
+{
+  "name": "web-haia",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "description": "Web publica de Haia (Ekinox Health, S.L.)",
+  "scripts": {
+    "dev": "astro dev --port 8810",
+    "build": "astro build",
+    "preview": "astro preview --port 8811"
+  },
+  "dependencies": {
+    "astro": "^5.14.1"
+  }
+}

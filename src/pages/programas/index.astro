@@ -1,0 +1,79 @@
+---
+import { r } from '../../lib/ruta.js';
+import Base from '../../layouts/Base.astro';
+import Icono from '../../components/Icono.astro';
+import Wordmark from '../../components/Wordmark.astro';
+import { programas, lineas } from '../../data/programas.js';
+
+const grupos = [
+  {
+    slug: 'conciliacion',
+    titulo: 'Para cobrar lo que trabajas',
+    entradilla:
+      'Los tres trabajan por debajo del servicio de conciliación. No los abres tú: los operamos nosotros y tú recibes el resultado.',
+  },
+  {
+    slug: 'control',
+    titulo: 'Para tener el centro bajo control',
+    entradilla:
+      'Estos los usa tu propio equipo, cada día. Nosotros los alojamos y los mantenemos; tú no instalas ni administras nada.',
+  },
+];
+---
+
+<Base
+  titulo="Los programas de Haia"
+  descripcion="Trova, Kriba, ArIA, Vizor, Aula, Tempo y Folia. Diferentes funciones, un mismo propósito: cobrar todo lo que se trabaja y tener el centro bajo control."
+>
+
+  <section class="seccion seccion--compacta">
+    <div class="contenedor">
+      <p class="rotulo">Los programas</p>
+      <h1 class="titulo-xl" style="max-width:18ch">Diferentes funciones. Un mismo propósito.</h1>
+      <p class="entradilla" style="margin-top:1.25rem">
+        Siete piezas que nacieron una a una, cada vez que un problema real de la clínica no tenía
+        solución en el mercado. Cada una tiene su nombre, su símbolo y su trabajo.
+      </p>
+    </div>
+  </section>
+
+  {grupos.map((g, i) => (
+    <section class={`seccion${i % 2 === 0 ? ' seccion--nube' : ''}`}>
+      <div class="contenedor">
+        <div class="cabeza-seccion">
+          <span class="etiqueta">{lineas.find((l) => l.slug === g.slug)?.etiqueta}</span>
+          <h2 class="titulo-l" style="margin-top:0.875rem">{g.titulo}</h2>
+          <p class="entradilla">{g.entradilla}</p>
+        </div>
+
+        <div class="rejilla rejilla--3">
+          {programas.filter((p) => p.linea === g.slug).map((p) => (
+            <a class="tarjeta tarjeta--enlace programa-tarjeta" href={r(`/programas/${p.slug}/`)}>
+              <Wordmark programa={p} />
+              <p class="texto" style="font-size:0.9375rem;margin:0">{p.lema}</p>
+              <p class="texto texto--apagado" style="font-size:0.9375rem">{p.resumenCorto}</p>
+              <div class="programa-tarjeta__pie">
+                <span class="etiqueta">{p.contratacion}</span>
+                <span class="programa-tarjeta__flecha"><Icono nombre="flecha" tam={18} /></span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <section class="seccion seccion--oscura franja">
+    <div class="contenedor franja__interior">
+      <h2 class="titulo-l" style="max-width:26ch">¿Cuál necesita tu centro?</h2>
+      <p class="entradilla">
+        Casi siempre se empieza por la conciliación, porque es la que se paga sola. Lo vemos en
+        cuarenta y cinco minutos.
+      </p>
+      <div class="acciones">
+        <a class="boton boton--principal" href={r('/#contacto')}>Hablamos</a>
+      </div>
+    </div>
+  </section>
+
+</Base>

@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.astro/
+
+# Material de trabajo, no forma parte de la web
+_capturas/
+_fuentes/
+work/

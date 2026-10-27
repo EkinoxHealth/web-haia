@@ -1,0 +1,455 @@
+/* ============================================================
+   Haia · web de una página
+   Identidad: brand-book-haia v1.1 (una tinta, Inter, mucho aire)
+   Azul Haia #0E2A3B · Azul Gris #5B6B7C · Gris Nube #EAEFF2
+   Acento sobre oscuro: Azul Haia Claro #A9CBE0
+   Espaciado en múltiplos de 8 px
+   ============================================================ */
+
+/* ---------- Tipografía servida desde la propia web ---------- */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('fuentes/inter-latin-300.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fuentes/inter-latin-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('fuentes/inter-latin-500.woff2') format('woff2');
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+:root {
+  --azul-haia: #0E2A3B;
+  --azul-gris: #5B6B7C;
+  --gris-nube: #EAEFF2;
+  --azul-claro: #A9CBE0;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: #FFFFFF;
+  color: var(--azul-haia);
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-weight: 400;
+  font-size: 1.0625rem;
+  line-height: 1.72;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img, svg { max-width: 100%; }
+
+/* Enlace para saltar al contenido (accesibilidad) */
+.salto {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+}
+.salto:focus {
+  left: 1rem;
+  top: 1rem;
+  z-index: 10;
+  background: #FFFFFF;
+  color: var(--azul-haia);
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+}
+
+:focus-visible {
+  outline: 2px solid var(--acento, var(--azul-haia));
+  outline-offset: 3px;
+}
+
+/* ============================================================
+   Bandas: cada una fija su propia paleta
+   ============================================================ */
+.banda {
+  --fondo: #FFFFFF;
+  --texto: var(--azul-haia);
+  --texto-suave: var(--azul-gris);
+  --linea: #D4DEE5;
+  --marca: var(--azul-haia);
+  --acento: var(--azul-haia);
+  --pad-v: clamp(4rem, 9vw, 7.5rem);
+
+  background: var(--fondo);
+  color: var(--texto);
+}
+
+.banda--nube {
+  --fondo: var(--gris-nube);
+  --linea: #C6D3DC;
+}
+
+.banda--oscura {
+  --fondo: var(--azul-haia);
+  --texto: #FFFFFF;
+  --texto-suave: rgba(255, 255, 255, 0.72);
+  --linea: rgba(169, 203, 224, 0.3);
+  --marca: var(--azul-claro);
+  --acento: var(--azul-claro);
+}
+
+/* ---------- Retícula: carril de rótulos + línea + cuerpo ----------
+   La línea vertical es la pieza de identidad de la página: nace al
+   acabar la cabecera y baja sin interrupción hasta el pie, con el
+   isotipo real marcando cada sección (brand book, § 10 separadores).
+   El relleno vertical vive en .rotulo y .cuerpo, no en .interior,
+   para que el borde de .cuerpo sea continuo entre bandas.          */
+.interior {
+  max-width: 70rem;
+  margin-inline: auto;
+  padding-inline: 2rem;
+  display: grid;
+  grid-template-columns: 11rem minmax(0, 1fr);
+}
+
+.rotulo {
+  grid-column: 1;
+  margin: 0;
+  padding: calc(var(--pad-v) + 0.5rem) 2.5rem 0 0;
+  text-align: right;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--texto-suave);
+}
+.rotulo::before { display: none; }
+
+.rail {
+  grid-column: 2;
+  position: relative;
+  border-left: 1px solid var(--linea);
+  padding: var(--pad-top, var(--pad-v)) 0 var(--pad-bot, var(--pad-v)) 2.5rem;
+}
+
+/* El isotipo sentado sobre la línea, cortándola */
+.hito {
+  position: absolute;
+  left: 0;
+  top: calc(var(--pad-top, var(--pad-v)) - 0.5rem);
+  width: 1.875rem;
+  height: 2.125rem;
+  transform: translateX(-50%);
+  background: var(--fondo);
+  display: grid;
+  place-items: center;
+}
+.hito::before {
+  content: "";
+  width: 1.0625rem;
+  height: 1.0625rem;
+  background: var(--marca);
+  -webkit-mask: url('img/haia-simbolo.svg') center / contain no-repeat;
+  mask: url('img/haia-simbolo.svg') center / contain no-repeat;
+}
+
+/* ---------- Texto corrido ---------- */
+.cuerpo h2 {
+  margin: 0 0 1.5rem;
+  max-width: 26ch;
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  font-weight: 400;
+  line-height: 1.26;
+  letter-spacing: -0.015em;
+}
+
+.cuerpo p {
+  margin: 0 0 1.25rem;
+  max-width: 34rem;
+}
+.cuerpo p:last-child { margin-bottom: 0; }
+
+.cuerpo strong { font-weight: 500; }
+
+.enlace {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid var(--acento);
+  padding-bottom: 0.1em;
+  transition: opacity 160ms ease;
+}
+.enlace:hover { opacity: 0.6; }
+
+/* Marcador de lo que falta por decidir (dominio, legales) */
+.pendiente {
+  border-bottom: 1px dotted currentColor;
+  opacity: 0.55;
+}
+
+/* ============================================================
+   Cabecera
+   ============================================================ */
+.cabecera {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Macro símbolo cortado por el borde (brand book, § 10) */
+.hoja-macro {
+  position: absolute;
+  top: -4%;
+  right: -17%;
+  width: 62vmin;
+  height: 62vmin;
+  background: var(--azul-claro);
+  opacity: 0.07;
+  -webkit-mask: url('img/haia-simbolo.svg') center / contain no-repeat;
+  mask: url('img/haia-simbolo.svg') center / contain no-repeat;
+  pointer-events: none;
+}
+
+.cabecera__cima {
+  position: relative;
+  max-width: 70rem;
+  margin-inline: auto;
+  padding: 3rem 2rem 0;
+}
+
+/* La portada comparte retícula con el resto: la línea nace aquí,
+   justo debajo del logotipo, y ya no se interrumpe hasta el pie. */
+.cabecera .interior { position: relative; }
+.cabecera .rotulo { display: none; }
+
+.cabecera__texto {
+  --pad-top: clamp(3rem, 7vw, 5rem);
+  --pad-bot: clamp(5rem, 10vw, 8rem);
+}
+
+.logo {
+  display: inline-block;
+  color: #FFFFFF;
+}
+.logo__marca {
+  display: block;
+  width: 9.375rem;
+  height: 3.3125rem;
+  background: currentColor;
+  -webkit-mask: url('img/haia-logo.svg') left center / contain no-repeat;
+  mask: url('img/haia-logo.svg') left center / contain no-repeat;
+}
+
+.titular {
+  margin: 0;
+  max-width: 30ch;
+  font-size: clamp(2.25rem, 4.8vw, 4rem);
+  font-weight: 300;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+}
+.titular em {
+  font-style: normal;
+  color: var(--acento);
+}
+
+.entradilla {
+  margin: 2rem 0 0;
+  max-width: 42ch;
+  font-size: 1.1875rem;
+  font-weight: 300;
+  line-height: 1.68;
+  color: var(--texto-suave);
+}
+
+.acciones { margin: 3rem 0 0; }
+
+.boton {
+  display: inline-block;
+  background: var(--acento);
+  color: var(--azul-haia);
+  padding: 0.875rem 1.75rem;
+  border-radius: 2px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  transition: background-color 160ms ease;
+}
+.boton:hover { background: #FFFFFF; }
+
+/* ============================================================
+   Cómo funciona · tres pasos (son una secuencia real)
+   ============================================================ */
+.pasos {
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
+  max-width: 34rem;
+  display: grid;
+  gap: 2rem;
+}
+.pasos li {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  align-items: start;
+}
+.pasos__num {
+  padding-top: 0.4rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  font-variant-numeric: tabular-nums;
+  color: var(--texto-suave);
+}
+.pasos p { margin: 0; }
+
+/* ============================================================
+   Qué incluye · los programas por su propio wordmark
+   ============================================================ */
+.piezas {
+  margin: 2.5rem 0 0;
+  max-width: 34rem;
+  display: grid;
+  gap: 2rem;
+}
+.pieza { display: grid; gap: 0.5rem; }
+.pieza dt { margin: 0; }
+.pieza dd {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.62;
+  color: var(--texto-suave);
+}
+
+.prog {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+  font-size: 1.125rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+/* El símbolo sustituye a la letra a la altura de la mayúscula (brand book,
+   § 12: «misma altura y peso tipográfico»). La caja del SVG es mayor que
+   el dibujo, así que se recorta su avance con márgenes negativos y se
+   compensa el tracking, que solo cae a la izquierda del símbolo.        */
+.prog__glifo {
+  width: 1.25em;
+  height: 1.25em;
+  margin: 0 -0.1em 0 -0.3em;
+  transform: translateY(-0.12em);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+.prog__glifo * { vector-effect: non-scaling-stroke; }
+.prog__glifo .relleno { fill: currentColor; stroke: none; }
+
+/* ============================================================
+   Por qué nosotros · la frase de la casa
+   ============================================================ */
+.cita {
+  margin: 0 0 2.5rem;
+  max-width: 30ch;
+  font-size: clamp(1.5rem, 3.4vw, 2.375rem);
+  font-weight: 300;
+  line-height: 1.26;
+  letter-spacing: -0.022em;
+}
+.cita em {
+  font-style: normal;
+  color: var(--acento);
+}
+
+/* ============================================================
+   Contacto y pie
+   ============================================================ */
+.pie__titular {
+  max-width: 24ch;
+  font-size: clamp(1.75rem, 3.2vw, 2.5rem);
+  font-weight: 300;
+  letter-spacing: -0.028em;
+  line-height: 1.12;
+}
+.pie__correo {
+  margin: 0;
+  font-size: clamp(1.125rem, 2vw, 1.375rem);
+  font-weight: 300;
+}
+.regla {
+  border: 0;
+  border-top: 1px solid var(--linea);
+  margin: 4rem 0 1.5rem;
+  max-width: 34rem;
+}
+.pie__legal {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--texto-suave);
+}
+.pie__enlaces {
+  margin: 0.75rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  font-size: 0.875rem;
+}
+
+/* ============================================================
+   Móvil y tableta: el carril se pliega, la línea desaparece
+   y el isotipo pasa a acompañar al rótulo
+   ============================================================ */
+@media (max-width: 52rem) {
+  .interior {
+    grid-template-columns: minmax(0, 1fr);
+    padding-inline: 1.5rem;
+  }
+  .rotulo {
+    grid-column: 1;
+    padding: var(--pad-v) 0 0;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+  }
+  .rotulo::before {
+    content: "";
+    display: block;
+    flex: none;
+    width: 0.875rem;
+    height: 0.875rem;
+    background: var(--marca);
+    -webkit-mask: url('img/haia-simbolo.svg') center / contain no-repeat;
+    mask: url('img/haia-simbolo.svg') center / contain no-repeat;
+  }
+  .rail {
+    grid-column: 1;
+    border-left: 0;
+    padding: 1.5rem 0 var(--pad-bot, var(--pad-v));
+  }
+  .hito { display: none; }
+
+  .cabecera__cima { padding-inline: 1.5rem; }
+  .cabecera__texto { padding-top: var(--pad-top); }
+  .hoja-macro { width: 92vmin; height: 92vmin; right: -34%; top: auto; bottom: -14%; }
+  .pasos li { grid-template-columns: 2.5rem minmax(0, 1fr); }
+}
+
+/* ============================================================
+   Sin animaciones. La página es un documento: lo que da carácter
+   es la tipografía y la línea, no el movimiento. Una entrada
+   escalonada dejaba la portada en blanco casi un segundo en cada
+   carga, que es justo lo primero que ve un gerente de clínica.
+   ============================================================ */

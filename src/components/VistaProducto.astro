@@ -1,0 +1,159 @@
+---
+import { r } from '../lib/ruta.js';
+// Vista conceptual del producto. NO lleva cifras inventadas: ni euros, ni
+// porcentajes, ni resultados. Lo que da credibilidad aqui es la estructura
+// de la interfaz (menu, filtros, columnas, estados), no unos numeros que no
+// podriamos sostener. Cuando haya capturas reales, esto se sustituye.
+import Icono from './Icono.astro';
+
+const { tipo = 'vizor' } = Astro.props;
+
+const variantes = {
+  vizor: 'panel', control: 'panel',
+  aula: 'cuadrante', tempo: 'cuadrante',
+  folia: 'documentos',
+};
+const v = variantes[tipo] || 'lineas';
+
+// Capturas reales, hechas sobre la Clínica Demo (datos inventados: la clinica,
+// los medicos, los pacientes y las seis aseguradoras). Donde hay captura se
+// enseña la captura; donde no la hay todavía, la vista conceptual de abajo.
+const capturas = {
+  vizor:   { src: r('/img/producto-vizor.webp'), ancho: 800, alto: 620, pie: 'Vizor, con los datos de la Clínica Demo' },
+  control: { src: r('/img/producto-vizor.webp'), ancho: 800, alto: 620, pie: 'Vizor, con los datos de la Clínica Demo' },
+  kriba:   { src: r('/img/producto-kriba.webp'), ancho: 800, alto: 446, pie: 'Kriba cerrando un mes de la Clínica Demo' },
+  conciliacion: { src: r('/img/producto-kriba.webp'), ancho: 800, alto: 446, pie: 'Kriba cerrando un mes de la Clínica Demo' },
+};
+const captura = capturas[tipo];
+
+const menu = {
+  panel:       ['Resumen', 'Facturación', 'Cobros', 'Informes', 'Ajustes'],
+  lineas:      ['Del día', 'Pendientes', 'Cerrados', 'Informes', 'Ajustes'],
+  cuadrante:   ['Semana', 'Mes', 'Personas', 'Salas', 'Ajustes'],
+  documentos:  ['Expedientes', 'Vencimientos', 'Avisos', 'Informes', 'Ajustes'],
+}[v];
+
+const titulos = {
+  panel: 'El centro, de un vistazo',
+  lineas: 'Cada línea, en su sitio',
+  cuadrante: 'La semana, sin huecos',
+  documentos: 'Cada documento, con su fecha',
+};
+
+const metricas = ['Facturación', 'Cobros recibidos', 'Pendiente de reclamar'];
+const barras = [82, 61, 28];
+const meses = ['E', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O'];
+const columnas = [38, 52, 44, 67, 58, 79, 71, 88, 76, 94];
+
+const filas = [
+  ['Consulta', '03/10', 'Facturado', ''],
+  ['Prueba diagnóstica', '03/10', 'No encontrado', 'revisar'],
+  ['Consulta', '04/10', 'Rechazado', 'revisar'],
+  ['Acto quirúrgico', '04/10', 'Facturado', ''],
+  ['Consulta', '05/10', 'Facturado', ''],
+];
+
+const dias = ['L', 'M', 'X', 'J', 'V'];
+const rejillaTurnos = [
+  [1, 1, 0, 1, 1],
+  [1, 0, 1, 1, 0],
+  [0, 1, 1, 0, 1],
+  [1, 1, 1, 1, 1],
+  [1, 0, 1, 1, 1],
+  [0, 1, 1, 1, 0],
+];
+
+const documentos = [
+  ['Título de especialista', 'Vigente', ''],
+  ['Responsabilidad civil', 'Caduca pronto', 'revisar'],
+  ['Colegiación', 'Vigente', ''],
+  ['Formación continuada', 'Vigente', ''],
+];
+---
+
+<figure class="vista-producto">
+  <div class="dispositivo">
+    {captura ? (
+      <img class="captura-producto" src={captura.src} width={captura.ancho} height={captura.alto} alt={captura.pie} loading="lazy" decoding="async" />
+    ) : (
+    <div class="pantalla-producto">
+
+      <div class="producto-barra">
+        <span class="producto-marca"><i class="producto-mini-marca" aria-hidden="true"></i>{tipo.toUpperCase()}</span>
+        <span class="producto-tag">Vista conceptual</span>
+      </div>
+
+      <div class="producto-cuerpo">
+        <aside>
+          {menu.map((m, i) => (
+            <span class={i === 0 ? 'nav-item nav-item--activo' : 'nav-item'}>
+              <i aria-hidden="true"></i><em>{m}</em>
+            </span>
+          ))}
+        </aside>
+
+        <div class="producto-datos">
+          <h3>{titulos[v]}</h3>
+
+          {v === 'panel' && (
+            <>
+              <div class="producto-metricas">
+                {metricas.map((m, i) => (
+                  <div>
+                    <span>{m}</span>
+                    <u style={`width:${barras[i]}%`}></u>
+                  </div>
+                ))}
+              </div>
+              <div class="grafico-demo" aria-label="Gráfico ilustrativo, sin datos reales">
+                {columnas.map((c, i) => (
+                  <i style={`height:${c}%`} class={i === columnas.length - 1 ? 'destacada' : ''}></i>
+                ))}
+              </div>
+              <div class="grafico-ejes" aria-hidden="true">{meses.map((m) => <span>{m}</span>)}</div>
+            </>
+          )}
+
+          {v === 'lineas' && (
+            <>
+              <div class="producto-filtros" aria-hidden="true">
+                <span class="chip chip--activo">Todas</span><span class="chip">Por revisar</span><span class="chip">Conformes</span>
+              </div>
+              <table class="producto-tabla">
+                <thead><tr><th>Acto</th><th>Fecha</th><th>Estado</th></tr></thead>
+                <tbody>
+                  {filas.map((f) => (
+                    <tr><td>{f[0]}</td><td>{f[1]}</td><td><b class={f[3] === 'revisar' ? 'estado-revisar' : ''}>{f[2]}</b></td></tr>
+                  ))}
+                </tbody>
+              </table>
+            </>
+          )}
+
+          {v === 'cuadrante' && (
+            <div class="cuadrante-demo" aria-hidden="true">
+              <div class="cuadrante-dias">{dias.map((d) => <span>{d}</span>)}</div>
+              {rejillaTurnos.map((fila) => (
+                <div class="cuadrante-fila">{fila.map((c) => <i class={c ? 'lleno' : ''}></i>)}</div>
+              ))}
+            </div>
+          )}
+
+          {v === 'documentos' && (
+            <table class="producto-tabla">
+              <thead><tr><th>Documento</th><th>Estado</th></tr></thead>
+              <tbody>
+                {documentos.map((d) => (
+                  <tr><td>{d[0]}</td><td><b class={d[2] === 'revisar' ? 'estado-revisar' : ''}>{d[1]}</b></td></tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+
+        </div>
+      </div>
+    </div>
+    )}
+  </div>
+  <figcaption>{captura ? captura.pie + ' · Datos de ejemplo' : 'Vista conceptual de la interfaz · Sin datos reales ni cifras'}</figcaption>
+</figure>

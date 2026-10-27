@@ -1,0 +1,5 @@
+# La web de Haia todavía no está publicada de verdad: faltan el dominio y los
+# textos legales. Se llega por enlace, pero no queremos que la indexe nadie.
+# Al publicar en serio, cambiar Disallow por Allow y quitar el noindex de Base.astro.
+User-agent: *
+Disallow: /

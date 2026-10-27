@@ -1,0 +1,76 @@
+---
+import { r } from '../lib/ruta.js';
+import Base from '../layouts/Base.astro';
+import Icono from '../components/Icono.astro';
+import { requisitos } from '../data/contenido.js';
+---
+
+<Base
+  titulo="Qué necesitas para empezar · Haia"
+  descripcion="No hace falta cambiar de programa de gestión, ni integrar nada, ni montar un proyecto de informática."
+>
+
+  <section class="seccion seccion--compacta">
+    <div class="contenedor dos-columnas">
+      <div>
+        <p class="rotulo" style="margin-bottom:1.25rem">Qué necesitas</p>
+        <h1 class="titulo-xl" style="max-width:14ch">Empezar cuesta un fichero</h1>
+        <p class="entradilla" style="margin-top:1.25rem">
+          No hace falta cambiar de programa de gestión, ni integrar nada, ni montar un proyecto de
+          informática. Esto es todo:
+        </p>
+        <div class="acciones" style="margin-top:1.75rem">
+          <a class="boton boton--principal" href={r('/#contacto')}>Pedir el piloto</a>
+          <a class="boton boton--secundario" href={r('/como-cobramos/')}>Cómo cobramos</a>
+        </div>
+      </div>
+      <ul class="lista-marcada" style="gap:1rem">
+        {requisitos.map((r) => (
+          <li><Icono nombre="tick" tam={18} /><span>{r}</span></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="seccion seccion--nube">
+    <div class="contenedor">
+      <div class="cabeza-seccion">
+        <p class="rotulo">Lo que no necesitas</p>
+        <h2 class="titulo-l">Nada de esto hace falta</h2>
+      </div>
+      <div class="rejilla rejilla--4">
+        <article class="tarjeta">
+          <span style="color:var(--azul-gris);display:block;margin-bottom:0.875rem"><Icono nombre="nube" tam={24} /></span>
+          <h3 class="titulo-s">Cambiar de programa</h3>
+          <p class="texto texto--apagado" style="font-size:0.9375rem">Trabajamos con la exportación que el tuyo ya hace.</p>
+        </article>
+        <article class="tarjeta">
+          <span style="color:var(--azul-gris);display:block;margin-bottom:0.875rem"><Icono nombre="enlace" tam={24} /></span>
+          <h3 class="titulo-s">Una integración</h3>
+          <p class="texto texto--apagado" style="font-size:0.9375rem">Ni API, ni acceso a tu servidor, ni proyecto de informática.</p>
+        </article>
+        <article class="tarjeta">
+          <span style="color:var(--azul-gris);display:block;margin-bottom:0.875rem"><Icono nombre="personas" tam={24} /></span>
+          <h3 class="titulo-s">Formar al equipo</h3>
+          <p class="texto texto--apagado" style="font-size:0.9375rem">Nadie del centro tiene que aprender un programa nuevo.</p>
+        </article>
+        <article class="tarjeta">
+          <span style="color:var(--azul-gris);display:block;margin-bottom:0.875rem"><Icono nombre="reloj" tam={24} /></span>
+          <h3 class="titulo-s">Dedicarle horas</h3>
+          <p class="texto texto--apagado" style="font-size:0.9375rem">Un fichero al mes. El trabajo mecánico lo ponemos nosotros.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="seccion seccion--oscura franja">
+    <div class="contenedor franja__interior">
+      <h2 class="titulo-l" style="max-width:24ch">¿Lo tienes? Pues ya puedes empezar.</h2>
+      <p class="entradilla">Una aseguradora, tus tres últimos meses ya liquidados, treinta días.</p>
+      <div class="acciones">
+        <a class="boton boton--principal" href={r('/#contacto')}>Pedir el piloto</a>
+      </div>
+    </div>
+  </section>
+
+</Base>

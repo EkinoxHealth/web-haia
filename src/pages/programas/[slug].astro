@@ -1,0 +1,161 @@
+---
+import { r } from '../../lib/ruta.js';
+import Base from '../../layouts/Base.astro';
+import Icono from '../../components/Icono.astro';
+import Wordmark from '../../components/Wordmark.astro';
+import VistaProducto from '../../components/VistaProducto.astro';
+import { programas } from '../../data/programas.js';
+
+export function getStaticPaths() {
+  return programas.map((p) => ({ params: { slug: p.slug }, props: { programa: p } }));
+}
+
+const { programa } = Astro.props;
+
+const otros = programas.filter((p) => p.slug !== programa.slug).slice(0, 3);
+
+const capturas = {
+  trova: 'La pantalla del día de Trova: las líneas del listado con su estado (facturado, no encontrado, rechazado) y el justificante de cada caso.',
+  kriba: 'El cierre de Kriba: el cruce de la liquidación de la aseguradora con lo facturado y con lo pagado al médico.',
+  aria: 'ArIA proponiendo una equivalencia entre dos nomenclaturas, con el botón de validar.',
+  vizor: 'Vizor abierto: facturación, cobros, pendiente de reclamar y tendencia en una sola vista.',
+  aula: 'El cuadrante de Aula: médicos, consultas y franjas horarias de una semana.',
+  tempo: 'El cuadrante de personal de Tempo, con los turnos de una semana.',
+  folia: 'El expediente de un profesional en Folia, con sus documentos y una fecha de vencimiento próxima.',
+};
+---
+
+<Base
+  titulo={`${programa.nombre} · ${programa.lema} | Haia`}
+  descripcion={`${programa.nombre}: ${programa.resumenCorto} ${programa.contratacion}.`}
+>
+
+  <!-- ══════════════════ CABECERA DEL PROGRAMA ══════════════════ -->
+  <section class="seccion seccion--compacta">
+    <div class="contenedor dos-columnas">
+      <div>
+        <p class="rotulo" style="margin-bottom:1.25rem">
+          <a href={r('/programas/')} style="text-decoration:none;color:inherit">Programas</a>
+        </p>
+
+        <Wordmark programa={programa} grande />
+
+        <p style="margin:1.25rem 0 1.5rem">
+          <span class="etiqueta">{programa.contratacion}</span>
+        </p>
+
+        <h1 class="titulo-l">{programa.lema}</h1>
+
+        {programa.descripcion.map((p) => <p class="texto texto--apagado">{p}</p>)}
+
+        <div class="acciones" style="margin-top:1.75rem">
+          <a class="boton boton--principal" href={r('/#contacto')}>Pedir el piloto</a>
+          <a class="boton boton--secundario" href={r('/#entregables')}>Ver qué recibes</a>
+        </div>
+      </div>
+
+      <VistaProducto tipo={programa.slug} />
+    </div>
+  </section>
+
+  <!-- ══════════════════ TRES CLAVES ══════════════════ -->
+  <section class="seccion seccion--nube seccion--compacta">
+    <div class="contenedor">
+      <div class="rejilla rejilla--3">
+        {programa.claves.map((c) => (
+          <article class="tarjeta">
+            <span style="color:var(--azul-gris);display:block;margin-bottom:0.875rem">
+              <Icono nombre={c.icono} tam={24} />
+            </span>
+            <h2 class="titulo-s">{c.titulo}</h2>
+            <p class="texto texto--apagado" style="font-size:0.9375rem">{c.texto}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ LA FICHA ══════════════════ -->
+  <section class="seccion">
+    <div class="contenedor">
+      <div class="cabeza-seccion">
+        <p class="rotulo">La ficha</p>
+        <h2 class="titulo-l">{programa.nombre}, al detalle</h2>
+      </div>
+
+      <div class="ficha">
+        <div class="ficha__fila">
+          <span class="ficha__clave">Para quién es</span>
+          <p class="ficha__valor">{programa.quien}</p>
+        </div>
+        <div class="ficha__fila">
+          <span class="ficha__clave">Qué necesita</span>
+          <p class="ficha__valor">{programa.necesita}</p>
+        </div>
+        <div class="ficha__fila">
+          <span class="ficha__clave">Qué entrega</span>
+          <p class="ficha__valor">{programa.entrega}</p>
+        </div>
+        <div class="ficha__fila">
+          <span class="ficha__clave">Cómo se contrata</span>
+          <p class="ficha__valor">{programa.contratacion}</p>
+        </div>
+        <div class="ficha__fila">
+          <span class="ficha__clave">Encaja con</span>
+          <p class="ficha__valor">{programa.encaja}</p>
+        </div>
+      </div>
+
+      {programa.significado && (
+        <div class="dos-columnas" style="margin-top:3rem;align-items:center">
+          <div>
+            <p class="rotulo">El símbolo</p>
+            <p class="texto texto--apagado" style="font-size:1.0625rem">{programa.significado}</p>
+          </div>
+          <div class="esquema" style="display:grid;place-items:center;padding:2.5rem">
+            <Wordmark programa={programa} grande />
+          </div>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- ══════════════════ OTROS PROGRAMAS ══════════════════ -->
+  <section class="seccion seccion--nube">
+    <div class="contenedor">
+      <div class="cabeza-seccion cabeza-seccion--fila">
+        <h2 class="titulo-l" style="margin:0">Los demás programas</h2>
+        <a class="enlace-flecha" href={r('/programas/')}>
+          Verlos todos <Icono nombre="flecha" tam={16} />
+        </a>
+      </div>
+
+      <div class="rejilla rejilla--3">
+        {otros.map((p) => (
+          <a class="tarjeta tarjeta--enlace programa-tarjeta" href={r(`/programas/${p.slug}/`)}>
+            <Wordmark programa={p} />
+            <p class="texto texto--apagado" style="font-size:0.9375rem">{p.resumenCorto}</p>
+            <div class="programa-tarjeta__pie">
+              <span class="etiqueta">{p.contratacion}</span>
+              <span class="programa-tarjeta__flecha"><Icono nombre="flecha" tam={18} /></span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ FRANJA FINAL ══════════════════ -->
+  <section class="seccion seccion--oscura franja">
+    <div class="contenedor franja__interior">
+      <h2 class="titulo-l" style="max-width:24ch">Empezar cuesta un fichero.</h2>
+      <p class="entradilla">
+        Una aseguradora, tus tres últimos meses ya liquidados, treinta días. Lo ves con tus cifras.
+      </p>
+      <div class="acciones">
+        <a class="boton boton--principal" href={r('/#contacto')}>Pedir el piloto</a>
+      </div>
+    </div>
+  </section>
+
+</Base>

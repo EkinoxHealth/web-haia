@@ -1,0 +1,42 @@
+---
+// El wordmark de cada programa: la palabra en mayúsculas con tracking amplio
+// y UNA letra sustituida por su símbolo, a la altura de la mayúscula
+// (brand-book-haia § 12 y tableros 19-26).
+//   TROVA · la O atravesada por la línea — el encuentro de dos datos
+//   KRIBA · la I como columna de puntos — el filtro
+//   VIZOR · la O focal — la visión y el foco
+//   AULA  · la U abierta con base — el espacio y la ocupación
+//   TEMPO · la E de tres líneas — las franjas de tiempo
+//   FOLIA · la O dividida — las capas de información
+// ARIA no tiene símbolo propio todavía: va en texto, sin glifo.
+const { programa, grande = false } = Astro.props;
+
+const glifos = {
+  trova: '<circle cx="12" cy="12" r="7"/><line x1="3" y1="12" x2="21" y2="12"/>',
+  kriba: '<circle cx="12" cy="6" r="1.4" class="relleno"/><circle cx="12" cy="12" r="1.4" class="relleno"/><circle cx="12" cy="18" r="1.4" class="relleno"/>',
+  vizor: '<circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.2" class="relleno"/>',
+  aula: '<path d="M5.5 5v6.5a6.5 6.5 0 0 0 13 0V5"/><rect x="8.5" y="14" width="7" height="2.2" rx="1.1" class="relleno"/>',
+  tempo: '<line x1="4.5" y1="6" x2="19.5" y2="6"/><line x1="4.5" y1="12" x2="19.5" y2="12"/><line x1="4.5" y1="18" x2="19.5" y2="18"/>',
+  folia: '<circle cx="12" cy="12" r="7"/><line x1="7" y1="17" x2="17" y2="7"/>',
+};
+
+const d = programa.glifo ? glifos[programa.glifo] : null;
+---
+
+<span
+  class={`wordmark${grande ? ' wordmark--grande' : ''}`}
+  role="img"
+  aria-label={programa.nombre}
+>
+  <span aria-hidden={d ? 'true' : undefined}>{programa.prefijo}</span>
+  {d && (
+    <svg
+      class="wordmark__glifo"
+      viewBox="0 0 24 24"
+      stroke-linecap="round"
+      aria-hidden="true"
+      set:html={d}
+    />
+  )}
+  {d && <span aria-hidden="true">{programa.sufijo}</span>}
+</span>

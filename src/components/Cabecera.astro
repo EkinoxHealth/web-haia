@@ -1,0 +1,69 @@
+---
+import { r } from '../lib/ruta.js';
+import Icono from './Icono.astro';
+
+// El botón principal es el PILOTO, no la demo: la puerta de entrada real al
+// servicio son los treinta días con los tres últimos meses ya liquidados.
+// «Precios» no existe como pestaña: el precio va en la propuesta, después del
+// piloto. Lo que sí se explica en la web es el mecanismo → «Cómo cobramos».
+const enlaces = [
+  { texto: 'Soluciones', href: r('/#soluciones') },
+  { texto: 'Programas', href: r('/programas/') },
+  { texto: 'Cómo funciona', href: r('/#como-funciona') },
+  { texto: 'Cómo cobramos', href: r('/como-cobramos/') },
+  { texto: 'Seguridad', href: r('/#tus-datos') },
+  { texto: 'Nosotros', href: r('/#nosotros') },
+];
+---
+
+<header class="cabecera">
+  <div class="contenedor cabecera__fila">
+    <a class="logo" href={r('/')} aria-label="Haia · inicio">
+      <span class="logo__marca" aria-hidden="true"></span>
+    </a>
+
+    <button
+      class="menu-boton"
+      type="button"
+      aria-expanded="false"
+      aria-controls="nav-principal"
+      data-menu
+    >
+      <span class="sr-solo">Menú</span>
+      <Icono nombre="menu" tam={20} />
+    </button>
+
+    <nav class="nav" id="nav-principal" aria-label="Principal">
+      {enlaces.map((e) => <a class="nav__enlace" href={e.href}>{e.texto}</a>)}
+      <a class="boton boton--principal nav__boton" href={r('/#contacto')}>Pedir el piloto</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .sr-solo {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  }
+</style>
+
+<script>
+  const boton = document.querySelector('[data-menu]');
+  const nav = document.getElementById('nav-principal');
+
+  if (boton && nav) {
+    boton.addEventListener('click', () => {
+      const abierta = nav.classList.toggle('nav--abierta');
+      boton.setAttribute('aria-expanded', String(abierta));
+    });
+
+    nav.addEventListener('click', (e) => {
+      if (e.target instanceof HTMLAnchorElement) {
+        nav.classList.remove('nav--abierta');
+        boton.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+</script>

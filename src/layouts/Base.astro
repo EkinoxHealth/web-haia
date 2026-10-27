@@ -1,0 +1,44 @@
+---
+import { r } from '../lib/ruta.js';
+import '../styles/haia.css';
+import Cabecera from '../components/Cabecera.astro';
+import Pie from '../components/Pie.astro';
+
+const {
+  titulo,
+  descripcion = 'Haia concilia cada día lo facturado con lo liquidado y cada mes lo cobrado con lo pagado al médico. Servicio para clínicas privadas: datos dentro, resultados fuera.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titulo}</title>
+    <meta name="description" content={descripcion} />
+
+    <!-- Fuera de los buscadores mientras la web no esté terminada: se llega por
+         enlace, pero no se indexa. Quitar las dos líneas al publicar de verdad. -->
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" href={r('/img/haia-app-icon.svg')} type="image/svg+xml" />
+
+    <!-- Sin cookies, sin analítica y sin una sola petición fuera de este dominio.
+         La tipografía Inter va autoalojada en /fuentes. -->
+    <link rel="preload" href={r('/fuentes/inter-latin-400.woff2')} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={r('/fuentes/inter-latin-300.woff2')} as="font" type="font/woff2" crossorigin />
+
+    <meta property="og:title" content={titulo} />
+    <meta property="og:description" content={descripcion} />
+    <meta property="og:type" content="website" />
+  </head>
+
+  <body>
+    <a class="salto" href="#contenido">Ir al contenido</a>
+    <Cabecera />
+    <main id="contenido">
+      <slot />
+    </main>
+    <Pie />
+  </body>
+</html>

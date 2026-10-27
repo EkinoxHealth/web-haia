@@ -1,0 +1,67 @@
+---
+import { r } from '../lib/ruta.js';
+import Base from '../layouts/Base.astro';
+import Icono from '../components/Icono.astro';
+import { preguntas } from '../data/contenido.js';
+---
+
+<Base
+  titulo="Preguntas frecuentes · Haia"
+  descripcion="Lo que nos preguntan siempre las clínicas: si hay que cambiar de programa, quién reclama, qué pasa si lo dejan."
+>
+
+  <section class="seccion seccion--compacta">
+    <div class="contenedor">
+      <div class="cabeza-seccion">
+        <p class="rotulo">Preguntas frecuentes</p>
+        <h1 class="titulo-xl" style="max-width:18ch">Lo que nos preguntan siempre</h1>
+      </div>
+
+      <div class="preguntas">
+        {preguntas.map((f) => (
+          <details class="pregunta">
+            <summary class="pregunta__p">
+              {f.p}
+              <span class="pregunta__mas" aria-hidden="true"></span>
+            </summary>
+            <p class="pregunta__r">{f.r}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="seccion seccion--nube">
+    <div class="contenedor">
+      <div class="cabeza-seccion">
+        <p class="rotulo">Si no está aquí</p>
+        <h2 class="titulo-l">Pregúntanoslo</h2>
+      </div>
+      <div class="rejilla rejilla--3">
+        <a class="tarjeta tarjeta--enlace" href={r('/como-cobramos/')}>
+          <h3 class="titulo-s">Cómo cobramos</h3>
+          <p class="texto texto--apagado" style="font-size:0.9375rem">El mecanismo entero, sin letra pequeña.</p>
+        </a>
+        <a class="tarjeta tarjeta--enlace" href={r('/que-necesitas/')}>
+          <h3 class="titulo-s">Qué necesitas</h3>
+          <p class="texto texto--apagado" style="font-size:0.9375rem">Lo que hace falta para empezar, y lo que no.</p>
+        </a>
+        <a class="tarjeta tarjeta--enlace" href={r('/#tus-datos')}>
+          <h3 class="titulo-s">Tus datos</h3>
+          <p class="texto texto--apagado" style="font-size:0.9375rem">Dónde están, quién los ve y qué firmamos.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="seccion seccion--oscura franja">
+    <div class="contenedor franja__interior">
+      <h2 class="titulo-l" style="max-width:24ch">¿Te queda alguna?</h2>
+      <p class="entradilla">La primera conversación son cuarenta y cinco minutos, y no hace falta que vengas con nada preparado.</p>
+      <div class="acciones">
+        <a class="boton boton--principal" href={r('/#contacto')}>Escríbenos</a>
+      </div>
+    </div>
+  </section>
+
+</Base>

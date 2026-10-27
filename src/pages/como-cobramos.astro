@@ -1,0 +1,77 @@
+---
+import { r } from '../lib/ruta.js';
+import Base from '../layouts/Base.astro';
+import Icono from '../components/Icono.astro';
+import { reglasDeCobro } from '../data/contenido.js';
+---
+
+<Base
+  titulo="Cómo cobramos · Haia"
+  descripcion="Primero el piloto. Después, un porcentaje de lo que recuperes o un pago mínimo mensual, lo que salga más alto. Sin permanencia."
+>
+
+  <section class="seccion seccion--compacta">
+    <div class="contenedor dos-columnas">
+      <div>
+        <p class="rotulo" style="margin-bottom:1.25rem">Cómo cobramos</p>
+        <h1 class="titulo-xl" style="max-width:18ch">Primero el piloto. Después, lo que recuperes.</h1>
+        <p class="entradilla" style="margin-top:1.25rem">
+          Del piloto sale tu propia foto: qué se quedó sin cobrar y cuánto se puede reclamar. Con
+          eso delante te hacemos la propuesta, para que el precio se compare con algo real y no con
+          una promesa.
+        </p>
+        <p class="texto texto--apagado" style="margin-top:1rem">
+          Tu cifra depende de tu volumen de actos y de con cuántas aseguradoras trabajas, así que
+          no la vas a encontrar en esta página: va en la propuesta.
+        </p>
+        <div class="acciones" style="margin-top:1.75rem">
+          <a class="boton boton--principal" href={r('/#contacto')}>Pedir el piloto</a>
+          <a class="boton boton--secundario" href={r('/que-necesitas/')}>Qué necesitas para empezar</a>
+        </div>
+      </div>
+
+      <div class="tarjeta">
+        <h2 class="titulo-m">El servicio mensual, en tres reglas</h2>
+        <ul class="lista-marcada">
+          {reglasDeCobro.map((r) => (
+            <li><Icono nombre="tick" tam={18} /><span set:html={r} /></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="seccion seccion--nube">
+    <div class="contenedor">
+      <div class="cabeza-seccion">
+        <p class="rotulo">Por qué lo hacemos así</p>
+        <h2 class="titulo-l">Si no recuperas, no nos ganamos la vida</h2>
+      </div>
+      <div class="rejilla rejilla--3">
+        <article class="tarjeta">
+          <h3 class="titulo-s">El piloto va primero</h3>
+          <p class="texto texto--apagado">Treinta días con una aseguradora y tus tres últimos meses ya liquidados. Antes de hablar de precio, ves la cifra.</p>
+        </article>
+        <article class="tarjeta">
+          <h3 class="titulo-s">El mínimo sostiene el servicio</h3>
+          <p class="texto texto--apagado">Hay meses flojos. El pago mínimo mantiene el trabajo en marcha sin que dependa de que ese mes aparezca mucho.</p>
+        </article>
+        <article class="tarjeta">
+          <h3 class="titulo-s">Lo que es tuyo se va contigo</h3>
+          <p class="texto texto--apagado">Sin permanencia y sin candado: el histórico sale en formato abierto el día que lo pidas.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="seccion seccion--oscura franja">
+    <div class="contenedor franja__interior">
+      <h2 class="titulo-l" style="max-width:24ch">La cifra sale del piloto, no de esta página.</h2>
+      <p class="entradilla">Una aseguradora, treinta días, y después hablamos de dinero.</p>
+      <div class="acciones">
+        <a class="boton boton--principal" href={r('/#contacto')}>Pedir el piloto</a>
+      </div>
+    </div>
+  </section>
+
+</Base>

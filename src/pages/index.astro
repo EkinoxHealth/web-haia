@@ -1,0 +1,427 @@
+---
+import { r } from '../lib/ruta.js';
+import Base from '../layouts/Base.astro';
+import Icono from '../components/Icono.astro';
+import VistaProducto from '../components/VistaProducto.astro';
+import Wordmark from '../components/Wordmark.astro';
+import { programas, entregables, lineas } from '../data/programas.js';
+
+const reclamos = [
+  { icono: 'euro', titulo: 'Cobra lo que trabajas', texto: 'Lo que hoy se queda por el camino' },
+  { icono: 'reloj', titulo: 'Sin tachar listados', texto: 'Ese trabajo lo hacemos nosotros' },
+  { icono: 'grafico', titulo: 'El centro a la vista', texto: 'Facturado, cobrado y por reclamar' },
+  { icono: 'nube', titulo: 'Sin instalar nada', texto: 'Ni integración ni formación' },
+];
+
+const pasos = [
+  { n: '1', titulo: 'Nos pasas los ficheros', texto: 'Los listados de las aseguradoras y la exportación de tu programa de gestión.' },
+  { n: '2', titulo: 'Conciliamos y cerramos', texto: 'Revisamos la actividad diaria y cruzamos cobros y pagos al cerrar el mes.' },
+  { n: '3', titulo: 'Recibes los informes', texto: 'Qué reclamar, qué rectificar y cómo va el centro.' },
+  { n: '4', titulo: 'Reclamas con criterio', texto: 'Con el justificante de cada caso delante.' },
+];
+---
+
+<Base titulo="Haia · Software para clínicas. Nació dentro de una.">
+
+  <!-- ══════════════════ HERO ══════════════════ -->
+  <section class="cabecera-hero"><img class="foto-portada" src={r('/img/clinica-portada.webp')} alt="" fetchpriority="high" decoding="async" width="1672" height="941" /><div class="velo-portada" aria-hidden="true"></div>
+
+
+    <div class="contenedor cabecera-hero__interior">
+      <div class="portada-rejilla"><div class="cabecera-hero__texto">
+        <h1 class="titulo-xl">Software para clínicas.<em>Nació dentro de una.</em></h1>
+        <p class="entradilla">
+          Inteligencia financiera para el sector médico privado.
+        </p>
+        <div class="acciones">
+          <a class="boton boton--principal" href="#piloto">Pedir el piloto de 30 días</a>
+          <a class="boton boton--secundario" href="#como-funciona">Ver cómo funciona</a>
+        </div>
+      </div>
+
+</div><ul class="reclamos">
+        {reclamos.map((r) => (
+          <li class="reclamo">
+            <span class="reclamo__icono"><Icono nombre={r.icono} tam={22} /></span>
+            <span class="reclamo__texto"><b>{r.titulo}</b><span>{r.texto}</span></span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- ══════════════════ DE DÓNDE VENIMOS ══════════════════ -->
+  <section class="seccion" id="nosotros">
+    <div class="contenedor dos-columnas">
+      <div>
+        <p class="rotulo">Una clínica. Un software.</p>
+        <h2 class="titulo-l">
+          No somos una empresa de software que ha estudiado clínicas: somos una clínica que ha
+          hecho software.
+        </h2>
+        <p class="texto texto--apagado">
+          Los tres socios dirigimos una clínica privada de Barcelona con más de 130 médicos. Cada
+          programa nació de un problema que sufrimos nosotros, se probó con datos reales y lleva
+          más de un año funcionando allí antes de ofrecérselo a nadie.
+        </p>
+        <p class="texto texto--apagado">
+          Eso no se copia: hay que haber estado dentro.
+        </p>
+      </div>
+<figure class="foto-origen"><img src={r('/img/clinica-detalle.webp')} alt="Detalle del mostrador de recepción de una clínica" loading="lazy" decoding="async" width="672" height="500" /><figcaption>Imagen conceptual de arquitectura clínica.</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- ══════════════════ EL AGUJERO DOBLE ══════════════════ -->
+  <section class="seccion seccion--nube" id="problema">
+    <div class="contenedor dos-columnas">
+      <div>
+        <p class="rotulo">El problema</p>
+        <h2 class="titulo-l">El agujero doble</h2>
+        <p class="entradilla" style="margin-bottom:1.25rem">
+          Pagas al médico y no cobras del seguro.
+        </p>
+        <p class="texto texto--apagado">
+          Entre la factura que sale del centro y el dinero que entra se pierden cosas: actos
+          rechazados, baremos mal aplicados, líneas facturadas que nunca llegan a cobrarse. Y se
+          pierde tiempo, porque alguien tiene que tachar listados a mano, línea por línea, cientos
+          de registros, cada mes.
+        </p>
+        <p class="texto texto--apagado">
+          No es descuido de nadie. Revisarlo a mano, entero y todos los meses, es imposible.
+        </p>
+        <a class="enlace-flecha" href="#soluciones">
+          Ver cómo lo resolvemos <Icono nombre="flecha" tam={16} />
+        </a>
+      </div>
+
+      <figure class="esquema" style="margin:0">
+        <svg viewBox="0 0 520 250" role="img" aria-label="Esquema: entre lo que se factura a la aseguradora y lo que se acaba cobrando queda un hueco.">
+          <text x="0" y="22" class="g-rotulo">LO QUE FACTURAS A LA ASEGURADORA</text>
+          <rect x="0" y="36" width="520" height="34" rx="3" fill="#0E2A3B" />
+
+          <text x="0" y="118" class="g-rotulo">LO QUE ACABAS COBRANDO</text>
+          <rect x="0" y="132" width="372" height="34" rx="3" fill="#5B6B7C" />
+          <rect x="372" y="132" width="148" height="34" rx="3" fill="none" stroke="#5B6B7C" stroke-width="1.5" stroke-dasharray="5 4" />
+
+          <path d="M372 180 L372 198 L520 198 L520 180" fill="none" stroke="#5B6B7C" stroke-width="1.5" />
+          <text x="446" y="222" text-anchor="middle" class="g-pie">lo que se queda</text>
+          <text x="446" y="240" text-anchor="middle" class="g-pie">por el camino</text>
+        </svg>
+        <figcaption class="g-nota">
+          Esquema, sin cifras. Las tuyas las ves en el piloto, con tus propios datos.
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ══════════════════ NUESTRA SOLUCIÓN (3 líneas) ══════════════════ -->
+  <section class="seccion" id="soluciones">
+    <div class="contenedor">
+      <div class="cabeza-seccion">
+        <p class="rotulo">Nuestra solución</p>
+        <h2 class="titulo-l">Diferentes funciones. Un mismo propósito.</h2>
+        <p class="entradilla">
+          Tres formas de trabajar con nosotros. Se pueden contratar por separado, pero casi siempre
+          se empieza por la primera.
+        </p>
+      </div>
+
+      <div class="pestanas" role="tablist" aria-label="Líneas de servicio">
+        {lineas.map((l, i) => (
+          <button
+            class="pestana"
+            role="tab"
+            id={`pestana-${l.slug}`}
+            aria-controls={`panel-${l.slug}`}
+            aria-selected={i === 0 ? 'true' : 'false'}
+            tabindex={i === 0 ? '0' : '-1'}
+            type="button"
+          >
+            {l.nombre}
+          </button>
+        ))}
+      </div>
+
+      {lineas.map((l, i) => (
+        <div
+          class="panel"
+          role="tabpanel"
+          id={`panel-${l.slug}`}
+          aria-labelledby={`pestana-${l.slug}`}
+          tabindex="0"
+          hidden={i !== 0}
+        >
+          <div class="dos-columnas--texto-estrecho dos-columnas">
+            <div>
+              <span class="etiqueta">{l.etiqueta}</span>
+              <h3 class="titulo-m" style="margin-top:0.875rem">{l.titular}</h3>
+              <p class="texto texto--apagado">{l.entradilla}</p>
+              <p class="texto"><span class="destacado">Cómo se entrega.</span> {l.modo}</p>
+              <div class="acciones" style="margin-top:1.5rem">
+                <a class="boton boton--secundario" href={r(`/soluciones/${l.slug}/`)}>
+                  Saber más <Icono nombre="flecha" tam={16} />
+                </a>
+              </div>
+            </div>
+
+            <div class="circuito" aria-hidden="true">
+              <div class="circuito__caja">
+                <span class="circuito__rotulo">Tú pones</span>
+                <ul class="circuito__lista">
+                  {l.slug === 'conciliacion' && <><li>Listados de aseguradoras</li><li>Exportación de tu programa</li></>}
+                  {l.slug === 'control' && <><li>Tus consultas y tu equipo</li><li>Tus datos de gestión</li></>}
+                  {l.slug === 'medida' && <><li>El problema que quieres resolver</li></>}
+                </ul>
+              </div>
+              <span class="circuito__flecha"><Icono nombre="flecha" tam={20} /></span>
+              <div class="circuito__caja circuito__caja--marca">
+                <span class="circuito__rotulo">Nosotros ponemos</span>
+                <ul class="circuito__lista">
+                  {l.slug === 'conciliacion' && <><li>Trova, Kriba y ArIA</li><li>El trabajo, cada día y cada mes</li></>}
+                  {l.slug === 'control' && <><li>Alojamiento y mantenimiento</li><li>Soporte y formación mínima</li></>}
+                  {l.slug === 'medida' && <><li>Viabilidad, presupuesto y entrega</li></>}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- ══════════════════ LO QUE RECIBES ══════════════════ -->
+  <section class="seccion seccion--nube" id="entregables">
+    <div class="contenedor">
+      <div class="cabeza-seccion cabeza-seccion--fila">
+        <div>
+          <p class="rotulo">Lo que recibes</p>
+          <h2 class="titulo-l">Cinco entregables, con detalle</h2>
+          <p class="entradilla">
+            No es un acceso a un programa: es trabajo hecho que llega a tu bandeja de entrada.
+          </p>
+        </div>
+      </div>
+
+      <div class="rejilla rejilla--5">
+        {entregables.map((e) => (
+          <article class="tarjeta entregable">
+            <span class="entregable__icono"><Icono nombre={e.icono} tam={24} /></span>
+            <div>
+              <h3 class="titulo-s">{e.titulo}</h3>
+              <p class="texto texto--apagado" style="font-size:0.875rem">{e.texto}</p>
+            </div>
+            <div class="entregable__metas">
+              <span class="meta"><Icono nombre="reloj" tam={15} /> {e.cuando}</span>
+              <span class="meta"><Icono nombre="personas" tam={15} /> {e.quien}</span>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ LOS PROGRAMAS ══════════════════ -->
+  <section class="seccion" id="programas">
+    <div class="contenedor">
+      <div class="cabeza-seccion cabeza-seccion--fila">
+        <div>
+          <p class="rotulo">Nuestros programas</p>
+          <h2 class="titulo-l">Siete piezas. Un problema cada una.</h2>
+          <p class="entradilla">
+            Tres los operamos nosotros para conciliar tus datos. Los otros cuatro los usa tu
+            propio equipo, alojados por nosotros.
+          </p>
+        </div>
+        <a class="enlace-flecha" href={r('/programas/')}>
+          Ver todos los programas <Icono nombre="flecha" tam={16} />
+        </a>
+      </div>
+
+      <div class="rejilla rejilla--4">
+        {programas.map((p) => (
+          <a class="tarjeta tarjeta--enlace programa-tarjeta" href={r(`/programas/${p.slug}/`)}>
+            <Wordmark programa={p} />
+            <p class="texto texto--apagado" style="font-size:0.9375rem">{p.resumenCorto}</p>
+            <div class="programa-tarjeta__pie">
+              <span class="etiqueta">{p.contratacion}</span>
+              <span class="programa-tarjeta__flecha"><Icono nombre="flecha" tam={18} /></span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ PILOTO ══════════════════ -->
+  <section class="seccion" id="piloto">
+    <div class="contenedor dos-columnas">
+<VistaProducto tipo="vizor" />
+      <div>
+        <p class="rotulo">Por dónde se empieza</p>
+        <h2 class="titulo-l">El piloto de 30 días</h2>
+        <p class="texto texto--apagado">
+          Una aseguradora, tus tres últimos meses ya liquidados, treinta días. En la segunda semana
+          ves lo que se te quedó sin cobrar, <span class="destacado">con tus cifras, no con las
+          nuestras</span>.
+        </p>
+        <p class="texto texto--apagado">
+          Al terminar, tendrás el detalle de las diferencias encontradas y la información para decidir el siguiente paso.
+        </p>
+        <div class="acciones" style="margin-top:1.5rem">
+          <a class="boton boton--principal" href="#contacto">Pedir el piloto</a>
+          <a class="boton boton--secundario" href={r('/que-necesitas/')}>Qué necesitas para empezar</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════ CÓMO FUNCIONA ══════════════════ -->
+  <section class="seccion seccion--nube" id="como-funciona">
+    <div class="contenedor">
+      <div class="cabeza-seccion">
+        <p class="rotulo">Cómo funciona</p>
+        <h2 class="titulo-l">De tus ficheros a tu informe</h2>
+        <p class="entradilla">
+          Sin instalaciones y sin integraciones. Datos dentro, resultados fuera.
+        </p>
+      </div>
+
+      <ol class="pasos">
+        {pasos.map((p) => (
+          <li>
+            <span class="paso__num">{p.n}</span>
+            <h3 class="titulo-s">{p.titulo}</h3>
+            <p class="texto texto--apagado" style="font-size:0.9375rem">{p.texto}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- ══════════════════ CÓMO COBRAMOS ══════════════════ -->
+
+  <!-- ══════════════════ QUÉ NECESITAS ══════════════════ -->
+
+  <!-- ══════════════════ TUS DATOS ══════════════════ -->
+  <!-- ══════════════════ ANTES DE DECIDIR ══════════════════ -->
+  <!-- Tres secciones que vivían aquí dentro y ahora tienen página propia: la
+       portada se quedó larga y repetitiva. Aquí solo el rótulo y el enlace. -->
+  <section class="seccion seccion--nube seccion--compacta" id="antes-de-decidir">
+    <div class="contenedor">
+      <div class="desvios">
+        <a class="desvio" href={r('/como-cobramos/')}>
+          <span class="desvio__rotulo">El mecanismo</span>
+          <span class="desvio__titulo">Cómo cobramos</span>
+          <span class="desvio__texto">Un porcentaje de lo que recuperes o un mínimo mensual, lo que salga más alto. Sin permanencia.</span>
+          <span class="desvio__flecha"><Icono nombre="flecha" tam={18} /></span>
+        </a>
+        <a class="desvio" href={r('/que-necesitas/')}>
+          <span class="desvio__rotulo">Para empezar</span>
+          <span class="desvio__titulo">Qué necesitas</span>
+          <span class="desvio__texto">Un programa que exporte listados y un interlocutor. Ni integración ni formación.</span>
+          <span class="desvio__flecha"><Icono nombre="flecha" tam={18} /></span>
+        </a>
+        <a class="desvio" href={r('/preguntas/')}>
+          <span class="desvio__rotulo">Las dudas</span>
+          <span class="desvio__titulo">Preguntas frecuentes</span>
+          <span class="desvio__texto">Quién reclama, si sustituye a alguien y qué pasa con el histórico si lo dejáis.</span>
+          <span class="desvio__flecha"><Icono nombre="flecha" tam={18} /></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="seccion seccion--oscura" id="tus-datos">
+    <div class="contenedor">
+      <div class="cabeza-seccion">
+        <p class="rotulo">Tus datos</p>
+        <h2 class="titulo-l">Dentro de la Unión Europea y solo para tu servicio</h2>
+        <p class="entradilla">
+          Trabajamos con datos de una clínica. Tenemos la misma obligación con los tuyos que con los
+          de la nuestra.
+        </p>
+      </div>
+
+      <div class="rejilla rejilla--4">
+        <article class="tarjeta" style="background:transparent;border-color:rgba(169,203,224,0.3)">
+          <span style="color:var(--azul-claro);display:block;margin-bottom:0.75rem"><Icono nombre="candado" tam={24} /></span>
+          <h3 class="titulo-s">Un espacio por cliente</h3>
+          <p class="texto texto--apagado" style="font-size:0.9375rem">Tus datos están separados de los de cualquier otro centro.</p>
+        </article>
+        <article class="tarjeta" style="background:transparent;border-color:rgba(169,203,224,0.3)">
+          <span style="color:var(--azul-claro);display:block;margin-bottom:0.75rem"><Icono nombre="nube" tam={24} /></span>
+          <h3 class="titulo-s">Infraestructura en la UE</h3>
+          <p class="texto texto--apagado" style="font-size:0.9375rem">Nada sale de la Unión Europea.</p>
+        </article>
+        <article class="tarjeta" style="background:transparent;border-color:rgba(169,203,224,0.3)">
+          <span style="color:var(--azul-claro);display:block;margin-bottom:0.75rem"><Icono nombre="documento" tam={24} /></span>
+          <h3 class="titulo-s">Contrato de encargo</h3>
+          <p class="texto texto--apagado" style="font-size:0.9375rem">Actuamos como encargados del tratamiento, con contrato y registro de actividades.</p>
+        </article>
+        <article class="tarjeta" style="background:transparent;border-color:rgba(169,203,224,0.3)">
+          <span style="color:var(--azul-claro);display:block;margin-bottom:0.75rem"><Icono nombre="cerebro" tam={24} /></span>
+          <h3 class="titulo-s">La IA no ve pacientes</h3>
+          <p class="texto texto--apagado" style="font-size:0.9375rem">No enviamos datos identificativos de pacientes a sistemas de inteligencia artificial.</p>
+        </article>
+      </div>
+
+      <p class="texto" style="margin-top:2rem">
+        <a class="enlace-flecha" href={r('/legal/datos/')}>
+          Leer la política de datos <Icono nombre="flecha" tam={16} />
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════════════════ PREGUNTAS FRECUENTES ══════════════════ -->
+
+  <!-- ══════════════════ FRANJA FINAL ══════════════════ -->
+  <section class="seccion seccion--oscura franja" id="contacto"><img class="foto-contacto" src={r('/img/clinica-cierre.webp')} alt="" loading="lazy" decoding="async" width="900" height="450" />
+    <div class="contenedor franja__interior">
+      <h2 class="titulo-l" style="max-width:24ch">¿Hablamos de tu caso?</h2>
+      <p class="entradilla">
+        Cuéntanos cómo trabajáis hoy y te enseñamos, con tus propios datos, qué se está quedando
+        sin cobrar. La primera conversación son cuarenta y cinco minutos.
+      </p>
+      <div class="acciones">
+        <a class="boton boton--principal" href="mailto:ekinoxhealth@gmail.com?subject=Solicitud%20de%20piloto%20Haia&body=Hola%2C%0A%0ANos%20interesa%20el%20piloto%20de%2030%20d%C3%ADas.%0A%0ACentro%3A%0APersona%20de%20contacto%3A%0APrograma%20de%20gesti%C3%B3n%3A%0AAseguradora%20que%20queremos%20revisar%3A%0A%0AGracias.">Pedir el piloto por email</a>
+      </div>
+      <p class="texto texto--apagado" style="font-size:0.9375rem;margin-top:0.5rem">
+        <a href="mailto:ekinoxhealth@gmail.com">ekinoxhealth@gmail.com</a> · Ekinox Health, S.L. · Barcelona
+      </p>
+    </div>
+  </section>
+
+</Base>
+
+<script>
+  // Pestañas de las tres líneas de servicio. Accesibles con teclado.
+  const lista = document.querySelector('[role="tablist"]');
+  if (lista) {
+    const pestanas = Array.from(lista.querySelectorAll('[role="tab"]'));
+
+    const mostrar = (indice) => {
+      pestanas.forEach((pestana, i) => {
+        const activa = i === indice;
+        pestana.setAttribute('aria-selected', String(activa));
+        pestana.setAttribute('tabindex', activa ? '0' : '-1');
+        const panel = document.getElementById(pestana.getAttribute('aria-controls'));
+        if (panel) panel.hidden = !activa;
+      });
+    };
+
+    pestanas.forEach((pestana, i) => {
+      pestana.addEventListener('click', () => mostrar(i));
+      pestana.addEventListener('keydown', (e) => {
+        const salto = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (!salto) return;
+        e.preventDefault();
+        const siguiente = (i + salto + pestanas.length) % pestanas.length;
+        mostrar(siguiente);
+        pestanas[siguiente].focus();
+      });
+    });
+  }
+</script>

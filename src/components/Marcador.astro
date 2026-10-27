@@ -1,0 +1,29 @@
+---
+// Marcador de lo que todavía no tenemos: fotografía real y capturas de producto.
+// Se ve a propósito. Mientras esté en pantalla, esa pieza NO está terminada,
+// y el brand book prohíbe resolverlo con banco de imágenes genérico.
+const {
+  tipo = 'foto',          // foto | captura
+  que,                     // qué foto o qué captura hace falta
+  oscuro = false,
+  hero = false,
+  alto,
+} = Astro.props;
+
+const etiquetas = {
+  foto: 'Foto pendiente',
+  captura: 'Captura pendiente',
+};
+---
+
+<div
+  class={`marcador${oscuro || hero ? ' marcador--oscuro' : ''}${hero ? ' marcador--hero' : ''}`}
+  style={alto ? `min-height:${alto}` : undefined}
+  role="img"
+  aria-label={`${etiquetas[tipo]}: ${que}`}
+>
+  <p class="marcador__nota">
+    <span class="marcador__tipo">{etiquetas[tipo]}</span>
+    <span class="marcador__que">{que}</span>
+  </p>
+</div>

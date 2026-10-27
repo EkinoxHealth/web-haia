@@ -1,0 +1,81 @@
+---
+import { r } from '../lib/ruta.js';
+import { programas } from '../data/programas.js';
+
+// Sin enlace de «Cookies»: la web no pone ninguna cookie ni usa analítica, así
+// que una política de cookies sobraría y contradiría la sección de datos.
+const anio = new Date().getFullYear();
+
+// ArIA se escribe así por marca; los demás van con sólo la inicial
+// en mayúscula (TROVA → Trova).
+const comoSeEscribe = (n) => (n === 'ARIA' ? 'ArIA' : n.charAt(0) + n.slice(1).toLowerCase());
+
+const columnas = [
+  {
+    titulo: 'Soluciones',
+    enlaces: [
+      { texto: 'Conciliación como servicio', href: r('/soluciones/conciliacion/') },
+      { texto: 'Control del centro', href: r('/soluciones/control/') },
+      { texto: 'Soluciones a medida', href: r('/soluciones/medida/') },
+      { texto: 'Piloto de 30 días', href: r('/#piloto') },
+    ],
+  },
+  {
+    titulo: 'Programas',
+    enlaces: programas.map((p) => ({
+      texto: comoSeEscribe(p.nombre),
+      href: r(`/programas/${p.slug}/`),
+    })),
+  },
+  {
+    titulo: 'Saber más',
+    enlaces: [
+      { texto: 'Cómo funciona', href: r('/#como-funciona') },
+      { texto: 'Cómo cobramos', href: r('/como-cobramos/') },
+      { texto: 'Qué necesitas', href: r('/que-necesitas/') },
+      { texto: 'Preguntas frecuentes', href: r('/preguntas/') },
+    ],
+  },
+  {
+    titulo: 'Nosotros',
+    enlaces: [
+      { texto: 'De dónde venimos', href: r('/#nosotros') },
+      { texto: 'Tus datos', href: r('/#tus-datos') },
+      { texto: 'Contacto', href: r('/#contacto') },
+    ],
+  },
+];
+---
+
+<footer class="pie">
+  <div class="contenedor">
+    <div class="pie__columnas">
+      <div class="pie__marca">
+        <span class="logo__marca" aria-hidden="true"></span>
+        <p class="pie__lema">Inteligencia financiera para el sector médico privado.</p>
+      </div>
+
+      {columnas.map((c) => (
+        <div>
+          <h2 class="pie__titulo">{c.titulo}</h2>
+          <ul class="pie__lista">
+            {c.enlaces.map((e) => <li><a href={e.href}>{e.texto}</a></li>)}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <div class="pie__base">
+      <p style="margin:0">
+        © {anio} Ekinox Health, S.L. · Barcelona ·
+        <a href="mailto:ekinoxhealth@gmail.com">ekinoxhealth@gmail.com</a>
+      </p>
+      <nav class="pie__legales" aria-label="Legal">
+        <a href={r('/legal/aviso-legal/')}>Aviso legal</a>
+        <a href={r('/legal/privacidad/')}>Privacidad</a>
+        <a href={r('/legal/condiciones/')}>Condiciones generales</a>
+        <a href={r('/legal/datos/')}>Política de datos</a>
+      </nav>
+    </div>
+  </div>
+</footer>
