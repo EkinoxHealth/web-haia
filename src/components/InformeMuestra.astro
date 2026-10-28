@@ -1,7 +1,10 @@
 ---
 // El entregable principal: el informe de reclamación. Las cifras son las de la
 // Clínica Demo (inventada), las mismas que salen en la captura de Kriba, para
-// que todo cuadre. Va rotulado como ejemplo, bien visible.
+// que todo cuadre. Las cifras se sostienen entre sí:
+//   613 revisadas − 522 conciliadas = 91 líneas sin pareja
+//   + 78 que sí casaron pero se pagaron a la tarifa vieja (78 × 2,00 € = 156,00 €)
+//   = 169 líneas a reclamar. Si se toca una, hay que rehacer las demás. Va rotulado como ejemplo, bien visible.
 import Icono from '../components/Icono.astro';
 
 const lineas = [
@@ -58,7 +61,7 @@ const lineas = [
       </div>
       <div>
         <span class="informe__cifra informe__cifra--rojo">1.831,50 €</span>
-        <span class="informe__etiq">A reclamar</span>
+        <span class="informe__etiq">A reclamar · 169 líneas</span>
       </div>
     </div>
 
@@ -79,7 +82,7 @@ const lineas = [
             <td><span class={'informe__motivo informe__motivo--' + l.tipo}>{l.motivo}</span></td>
           </tr>
         ))}
-        <tr class="informe__mas"><td colspan="6">… y 88 líneas más en el informe completo</td></tr>
+        <tr class="informe__mas"><td colspan="6">… y 166 líneas más en el informe completo</td></tr>
       </tbody>
     </table>
 
@@ -91,7 +94,7 @@ const lineas = [
         <div><dt>Tu programa de gestión</dt><dd>Visita especialista Cardiología · 35,00 €</dd></div>
         <div><dt>La liquidación de la aseguradora</dt><dd>CONS. CARDIOLOGIA · 33,00 €</dd></div>
         <div><dt>Baremo en vigor</dt><dd>35,00 € desde enero de 2026</dd></div>
-        <div><dt>Qué pasó</dt><dd>Se pagó a la tarifa del año anterior. Afecta a 412 visitas del mes.</dd></div>
+        <div><dt>Qué pasó</dt><dd>Se pagó a la tarifa del año anterior. Afecta a 78 visitas del mes: 156,00 € en total.</dd></div>
       </dl>
     </div>
 
