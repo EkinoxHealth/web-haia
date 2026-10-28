@@ -17,6 +17,10 @@ export const reglasDeCobro = [
 
 export const preguntas = [
   {
+    p: '¿El piloto tiene coste?',
+    r: 'No. El piloto de 30 días es gratuito y no compromete a nada. Al terminar te entregamos el informe de reclamación, el de rectificaciones, la cifra de lo que se quedó sin cobrar y una propuesta con el precio del servicio mensual. Si no quieres seguir, no hay que hacer nada más.',
+  },
+  {
     p: '¿Tengo que cambiar mi programa de gestión?',
     r: 'No. No lo sustituimos ni hace falta integrarlo: trabajamos con la exportación que tu programa ya hace. Por eso funciona con cualquiera.',
   },

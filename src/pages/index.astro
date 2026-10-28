@@ -450,9 +450,22 @@ const pasos = [
       <div class="acciones">
         <a class="boton boton--principal" href="mailto:ekinoxhealth@gmail.com?subject=Solicitud%20de%20piloto%20Haia&body=Hola%2C%0A%0ANos%20interesa%20el%20piloto%20de%2030%20d%C3%ADas.%0A%0ACentro%3A%0APersona%20de%20contacto%3A%0APrograma%20de%20gesti%C3%B3n%3A%0AAseguradora%20que%20queremos%20revisar%3A%0A%0AGracias.">Pedir el piloto por email</a>
       </div>
-      <p class="texto texto--apagado" style="font-size:0.9375rem;margin-top:0.5rem">
-        <a href="mailto:ekinoxhealth@gmail.com">ekinoxhealth@gmail.com</a> · Ekinox Health, S.L. · Barcelona
-      </p>
+      <!-- Alternativa para quien no tenga una aplicación de correo configurada:
+           el botón de arriba no le abrirá nada. -->
+      <div class="contacto-alterno">
+        <p class="contacto-alterno__linea">
+          ¿No se te abre el correo? Escríbenos tú mismo a
+          <button class="copiar" type="button" data-copiar="ekinoxhealth@gmail.com">
+            <span>ekinoxhealth@gmail.com</span>
+            <Icono nombre="documento" tam={14} />
+          </button>
+        </p>
+        <p class="contacto-alterno__linea contacto-alterno__linea--apagada">
+          Si quieres, usa
+          <a href={r('/solicitud-piloto.txt')} download>esta plantilla</a>
+          con los datos que necesitamos. · Ekinox Health, S.L. · Barcelona
+        </p>
+      </div>
     </div>
   </section>
 

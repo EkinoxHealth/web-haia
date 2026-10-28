@@ -898,3 +898,81 @@ body{background:#f6f9fb}.cabecera{background:#fff}.logo__marca{width:6rem}.conte
 
 /* El texto del informe, alineado arriba con la hoja */
 #el-informe > .dos-columnas { align-items: start; }
+
+/* ============================================================
+   Informe en móvil · la tabla deja de ser tabla
+   Con seis columnas no cabe en un teléfono: se salía 508 px en
+   una pantalla de 450 y la hoja la recortaba, así que el motivo
+   de cada diferencia no se llegaba a ver. Cada línea pasa a ser
+   un bloque: fecha y acto a la izquierda, importe y motivo a la
+   derecha.
+   ============================================================ */
+@media (max-width: 760px) {
+  .informe__tabla, .informe__tabla tbody, .informe__tabla tr, .informe__tabla td { display: block; }
+  .informe__tabla thead { display: none; }
+
+  .informe__tabla tbody tr {
+    display: grid; grid-template-columns: 1fr auto;
+    gap: 0.1rem 0.75rem; align-items: center;
+    padding: 0.75rem 1rem; border-bottom: 1px solid #eef5fa;
+  }
+  .informe__tabla td { padding: 0; border: 0; }
+
+  /* fecha */
+  .informe__tabla tbody td:nth-child(1) {
+    grid-column: 1; grid-row: 1;
+    font-size: 0.6875rem; color: var(--azul-gris);
+  }
+  /* acto */
+  .informe__tabla tbody td:nth-child(2) { grid-column: 1; grid-row: 2; }
+  /* diferencia */
+  .informe__tabla tbody td:nth-child(5) {
+    grid-column: 2; grid-row: 1; text-align: right;
+  }
+  /* motivo */
+  .informe__tabla tbody td:nth-child(6) { grid-column: 2; grid-row: 2; text-align: right; }
+
+  .informe__mas { display: block; }
+  .informe__mas td { text-align: center; padding: 0.7rem 1rem; }
+}
+
+@media (max-width: 760px) {
+  /* El importe no se parte: pierde toda la fuerza */
+  .informe__cifra { font-size: 1.25rem; white-space: nowrap; }
+  .informe__resumen > div { padding-inline: 0.85rem; }
+  .informe__etiq { font-size: 0.5625rem; }
+}
+
+@media (max-width: 760px) {
+  /* En un teléfono, encajar la captura entera no sirve de nada: se ve igual de
+     pequeña que en la página. Se deja a su tamaño y se desplaza con el dedo. */
+  .visor__caja { overflow: auto; -webkit-overflow-scrolling: touch; }
+  .visor__caja img { width: auto; max-width: none; height: auto; max-height: 70vh; }
+  .visor__pie { position: sticky; left: 0; }
+}
+
+/* El botón del menú se quedaba en 38 px: por debajo del mínimo cómodo para el dedo */
+@media (max-width: 760px) { .menu-boton { min-height: 44px; } }
+
+/* ============================================================
+   Contacto · alternativa al botón de correo
+   El botón abre la aplicación de correo del aparato. Quien no
+   tenga ninguna configurada se queda sin nada, así que la
+   dirección está también a la vista y se copia de un toque.
+   ============================================================ */
+.contacto-alterno { margin-top: 1.1rem; display: grid; gap: 0.35rem; }
+.contacto-alterno__linea { margin: 0; font-size: 0.9375rem; color: rgba(255, 255, 255, 0.85); }
+.contacto-alterno__linea--apagada { color: rgba(255, 255, 255, 0.6); font-size: 0.875rem; }
+.contacto-alterno a { color: inherit; }
+.copiar {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  background: none; border: 0; border-bottom: 1px dashed rgba(255, 255, 255, 0.5);
+  color: #fff; font: inherit; padding: 0 0 1px; cursor: pointer;
+}
+.copiar:hover, .copiar:focus-visible { border-bottom-style: solid; }
+.copiar[data-copiado] { border-bottom-color: var(--azul-claro); color: var(--azul-claro); }
+
+@media (max-width: 760px) {
+  /* Área táctil del correo: se agranda sin romper la línea de texto */
+  .copiar { padding-block: 0.55rem; margin-block: -0.55rem; }
+}

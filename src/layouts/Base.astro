@@ -8,6 +8,11 @@ const {
   titulo,
   descripcion = 'Haia concilia cada día lo facturado con lo liquidado y cada mes lo cobrado con lo pagado al médico. Servicio para clínicas privadas: datos dentro, resultados fuera.',
 } = Astro.props;
+
+// Lo que se ve cuando alguien pega el enlace en WhatsApp, LinkedIn o un correo.
+// En JPEG a propósito: hay sitios que todavía no pintan WebP en estas tarjetas.
+const imagenSocial = new URL(r('/img/haia-social.jpg'), Astro.site);
+const urlCanonica = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!doctype html>
@@ -28,9 +33,19 @@ const {
     <link rel="preload" href={r('/fuentes/inter-latin-400.woff2')} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={r('/fuentes/inter-latin-300.woff2')} as="font" type="font/woff2" crossorigin />
 
+    <link rel="canonical" href={urlCanonica} />
+
     <meta property="og:title" content={titulo} />
     <meta property="og:description" content={descripcion} />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Haia" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:url" content={urlCanonica} />
+    <meta property="og:image" content={imagenSocial} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Haia · Software para clínicas. Nació dentro de una." />
+    <meta name="twitter:card" content="summary_large_image" />
   </head>
 
   <body>
@@ -72,6 +87,28 @@ const {
           if (e.target.closest('[data-cerrar]') || e.target === visor) visor.close();
         });
       }
+
+      // Copiar la dirección de correo, para quien no tenga aplicación de correo.
+      // Si el navegador no deja copiar, al menos la deja seleccionada.
+      document.addEventListener('click', async (e) => {
+        const b = e.target.closest('.copiar');
+        if (!b) return;
+        const texto = b.dataset.copiar;
+        const etiqueta = b.querySelector('span');
+        try {
+          await navigator.clipboard.writeText(texto);
+          const antes = etiqueta.textContent;
+          etiqueta.textContent = 'Copiada';
+          b.setAttribute('data-copiado', '');
+          setTimeout(() => { etiqueta.textContent = antes; b.removeAttribute('data-copiado'); }, 1600);
+        } catch (err) {
+          const r = document.createRange();
+          r.selectNodeContents(etiqueta);
+          const sel = getSelection();
+          sel.removeAllRanges();
+          sel.addRange(r);
+        }
+      });
     </script>
   </body>
 </html>
