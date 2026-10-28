@@ -1,0 +1,102 @@
+---
+// El entregable principal: el informe de reclamación. Las cifras son las de la
+// Clínica Demo (inventada), las mismas que salen en la captura de Kriba, para
+// que todo cuadre. Va rotulado como ejemplo, bien visible.
+import Icono from '../components/Icono.astro';
+
+const lineas = [
+  {
+    fecha: '04/05/2026',
+    acto: 'Visita especialista · Cardiología',
+    facturado: '35,00 €',
+    pagado: '33,00 €',
+    dif: '−2,00 €',
+    motivo: 'Baremo mal aplicado',
+    tipo: 'baremo',
+  },
+  {
+    fecha: '11/05/2026',
+    acto: 'Ecocardiograma',
+    facturado: '75,00 €',
+    pagado: '—',
+    dif: '−75,00 €',
+    motivo: 'No aparece en la liquidación',
+    tipo: 'falta',
+  },
+  {
+    fecha: '18/05/2026',
+    acto: 'Infiltración articular',
+    facturado: '48,00 €',
+    pagado: '—',
+    dif: '−48,00 €',
+    motivo: 'Rechazado · fuera de cobertura',
+    tipo: 'rechazo',
+  },
+];
+---
+
+<figure class="informe">
+  <div class="informe__hoja">
+
+    <header class="informe__cabeza">
+      <div>
+        <span class="informe__marca"><span class="logo__marca" aria-hidden="true"></span></span>
+        <p class="informe__titulo">Informe de reclamación</p>
+        <p class="informe__sub">Nordica Salud · Mayo 2026 · Clínica Demo</p>
+      </div>
+      <span class="informe__sello">Ejemplo</span>
+    </header>
+
+    <div class="informe__resumen">
+      <div>
+        <span class="informe__cifra">613</span>
+        <span class="informe__etiq">Líneas revisadas</span>
+      </div>
+      <div>
+        <span class="informe__cifra">522</span>
+        <span class="informe__etiq">Conciliadas</span>
+      </div>
+      <div>
+        <span class="informe__cifra informe__cifra--rojo">1.831,50 €</span>
+        <span class="informe__etiq">A reclamar</span>
+      </div>
+    </div>
+
+    <table class="informe__tabla">
+      <thead>
+        <tr>
+          <th>Fecha</th><th>Acto</th><th>Facturado</th><th>Pagado</th><th>Diferencia</th><th>Motivo</th>
+        </tr>
+      </thead>
+      <tbody>
+        {lineas.map((l) => (
+          <tr>
+            <td>{l.fecha}</td>
+            <td>{l.acto}</td>
+            <td class="informe__num">{l.facturado}</td>
+            <td class="informe__num">{l.pagado}</td>
+            <td class="informe__num informe__num--rojo">{l.dif}</td>
+            <td><span class={'informe__motivo informe__motivo--' + l.tipo}>{l.motivo}</span></td>
+          </tr>
+        ))}
+        <tr class="informe__mas"><td colspan="6">… y 88 líneas más en el informe completo</td></tr>
+      </tbody>
+    </table>
+
+    <div class="informe__justif">
+      <p class="informe__justif-tit">
+        <Icono nombre="documento" tam={16} /> Justificante de la primera línea
+      </p>
+      <dl class="informe__dl">
+        <div><dt>Tu programa de gestión</dt><dd>Visita especialista Cardiología · 35,00 €</dd></div>
+        <div><dt>La liquidación de la aseguradora</dt><dd>CONS. CARDIOLOGIA · 33,00 €</dd></div>
+        <div><dt>Baremo en vigor</dt><dd>35,00 € desde enero de 2026</dd></div>
+        <div><dt>Qué pasó</dt><dd>Se pagó a la tarifa del año anterior. Afecta a 412 visitas del mes.</dd></div>
+      </dl>
+    </div>
+
+  </div>
+  <figcaption>
+    Ejemplo de informe · Cifras de la Clínica Demo, inventada · Sin datos de ningún centro real
+  </figcaption>
+</figure>

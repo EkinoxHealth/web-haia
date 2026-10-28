@@ -40,5 +40,38 @@ const {
       <slot />
     </main>
     <Pie />
+
+    <!-- Visor de capturas: la única pizca de JavaScript de la web. Sin él la
+         página funciona igual, solo que las capturas no se abren en grande. -->
+    <dialog id="visor-captura" aria-label="Captura ampliada">
+      <div class="visor__caja">
+        <img id="visor-img" src="" alt="" />
+        <p class="visor__pie">
+          <span id="visor-pie"></span>
+          <button class="visor__cerrar" type="button" data-cerrar>Cerrar</button>
+        </p>
+      </div>
+    </dialog>
+
+    <script>
+      const visor = document.getElementById('visor-captura');
+      if (visor && typeof visor.showModal === 'function') {
+        const img = document.getElementById('visor-img');
+        const pie = document.getElementById('visor-pie');
+
+        document.addEventListener('click', (e) => {
+          const boton = e.target.closest('.captura-abrir');
+          if (boton) {
+            img.src = boton.dataset.captura;
+            img.alt = boton.dataset.pie;
+            pie.textContent = boton.dataset.pie;
+            visor.showModal();
+            return;
+          }
+          // Cerrar con el botón o pinchando fuera de la caja
+          if (e.target.closest('[data-cerrar]') || e.target === visor) visor.close();
+        });
+      }
+    </script>
   </body>
 </html>

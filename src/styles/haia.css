@@ -774,3 +774,127 @@ body{background:#f6f9fb}.cabecera{background:#fff}.logo__marca{width:6rem}.conte
   .desvio { padding: 0; border-left: 0; border-top: 1px solid var(--borde); padding-top: 1.25rem; }
   .desvio:first-child { border-top: 0; padding-top: 0; }
 }
+
+/* ============================================================
+   Captura de producto · menos inclinación y ampliable
+   Estaba tan girada que no se leía. Se reduce el giro y se puede
+   abrir en grande, que es donde se ve de verdad lo que hace.
+   ============================================================ */
+.dispositivo { transform: rotateY(-4deg) rotateZ(-1.2deg); }
+.vista-producto { perspective: 1600px; }
+
+.captura-abrir {
+  display: block; width: 100%; padding: 0; border: 0; background: none;
+  cursor: zoom-in; position: relative; border-radius: 6px;
+}
+.captura-lupa {
+  position: absolute; right: 0.6rem; bottom: 0.6rem;
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  background: rgba(14, 42, 59, 0.88); color: #fff;
+  font-size: 0.6875rem; padding: 0.3rem 0.55rem; border-radius: 4px;
+  opacity: 0; transition: opacity 0.15s ease;
+}
+.captura-abrir:hover .captura-lupa,
+.captura-abrir:focus-visible .captura-lupa { opacity: 1; }
+.captura-abrir:focus-visible { outline: 2px solid var(--azul-claro); outline-offset: 3px; }
+
+/* La ventana de la captura en grande */
+#visor-captura { border: 0; padding: 0; background: none; max-width: 96vw; max-height: 94vh; }
+#visor-captura::backdrop { background: rgba(7, 32, 48, 0.88); }
+.visor__caja { background: var(--blanco); border-radius: 8px; overflow: hidden; }
+.visor__caja img { display: block; width: 100%; height: auto; max-height: 82vh; object-fit: contain; }
+.visor__pie {
+  display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  padding: 0.7rem 1rem; font-size: 0.8125rem; color: var(--azul-gris);
+  border-top: 1px solid var(--borde);
+}
+.visor__cerrar {
+  border: 1px solid var(--borde); background: none; border-radius: 4px;
+  padding: 0.3rem 0.7rem; cursor: pointer; color: var(--azul-haia); font: inherit; font-size: 0.8125rem;
+}
+.visor__cerrar:hover { background: var(--gris-nube); }
+@media (max-width: 760px) { .captura-lupa { opacity: 1; } }
+
+/* ============================================================
+   Informe de muestra · el entregable
+   Es lo que la clínica recibe de verdad, así que tiene que verse
+   como un documento, no como una tarjeta más de la web.
+   ============================================================ */
+.informe { margin: 0; }
+.informe__hoja {
+  background: var(--blanco); border: 1px solid var(--borde); border-radius: 6px;
+  overflow: hidden; max-width: 46rem;
+}
+.informe__cabeza {
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem;
+  padding: 1.4rem 1.6rem 1.2rem; border-bottom: 1px solid var(--borde);
+}
+.informe__marca { display: block; margin-bottom: 0.7rem; }
+.informe__marca .logo__marca { background: var(--azul-haia); }
+.informe__titulo { margin: 0; font-size: 1.0625rem; font-weight: 500; color: var(--azul-haia); }
+.informe__sub { margin: 0.15rem 0 0; font-size: 0.8125rem; color: var(--azul-gris); }
+.informe__sello {
+  flex: none; font-size: 0.625rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: #8a6d1f; background: #fdf4df; border: 1px solid #efdcab;
+  padding: 0.22rem 0.5rem; border-radius: 3px;
+}
+
+.informe__resumen {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  border-bottom: 1px solid var(--borde);
+}
+.informe__resumen > div { padding: 1rem 1.6rem; border-left: 1px solid var(--borde); }
+.informe__resumen > div:first-child { border-left: 0; }
+.informe__cifra { display: block; font-size: 1.5rem; font-weight: 300; color: var(--azul-haia); }
+.informe__cifra--rojo { color: #ae443e; }
+.informe__etiq {
+  display: block; margin-top: 0.15rem;
+  font-size: 0.625rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--azul-gris);
+}
+
+.informe__tabla { width: 100%; border-collapse: collapse; font-size: 0.8125rem; }
+.informe__tabla th {
+  text-align: left; font-weight: 500; color: var(--azul-gris);
+  font-size: 0.625rem; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 0.7rem 0.6rem; border-bottom: 1px solid var(--borde); background: #fbfdfe;
+}
+.informe__tabla th:first-child, .informe__tabla td:first-child { padding-left: 1.6rem; }
+.informe__tabla th:last-child, .informe__tabla td:last-child { padding-right: 1.6rem; }
+.informe__tabla td { padding: 0.7rem 0.6rem; border-bottom: 1px solid #eef5fa; color: var(--azul-haia); }
+.informe__num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.informe__num--rojo { color: #ae443e; font-weight: 500; }
+.informe__motivo {
+  font-size: 0.6875rem; padding: 0.18rem 0.42rem; border-radius: 3px; white-space: nowrap;
+  background: var(--gris-nube); color: var(--azul-gris);
+}
+.informe__motivo--baremo { background: #fdf4df; color: #8a6d1f; }
+.informe__motivo--falta { background: #e9f2fb; color: #2f6f9e; }
+.informe__motivo--rechazo { background: #fff0ee; color: #ae443e; }
+.informe__mas td {
+  text-align: center; color: var(--azul-gris); font-size: 0.75rem;
+  padding-block: 0.6rem; border-bottom: 0;
+}
+
+.informe__justif { background: #f7fbfd; border-top: 1px solid var(--borde); padding: 1.1rem 1.6rem 1.3rem; }
+.informe__justif-tit {
+  display: flex; align-items: center; gap: 0.4rem; margin: 0 0 0.75rem;
+  font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--azul-gris);
+}
+.informe__dl { margin: 0; display: grid; gap: 0.5rem; }
+.informe__dl > div { display: grid; grid-template-columns: 14rem 1fr; gap: 1rem; font-size: 0.8125rem; }
+.informe__dl dt { color: var(--azul-gris); }
+.informe__dl dd { margin: 0; color: var(--azul-haia); }
+.informe > figcaption { margin-top: 0.9rem; font-size: 0.75rem; color: var(--azul-gris); }
+
+@media (max-width: 760px) {
+  .informe__tabla th:nth-child(3), .informe__tabla td:nth-child(3),
+  .informe__tabla th:nth-child(4), .informe__tabla td:nth-child(4) { display: none; }
+  .informe__resumen > div { padding-inline: 1rem; }
+  .informe__cabeza, .informe__justif { padding-inline: 1rem; }
+  .informe__tabla th:first-child, .informe__tabla td:first-child { padding-left: 1rem; }
+  .informe__tabla th:last-child, .informe__tabla td:last-child { padding-right: 1rem; }
+  .informe__dl > div { grid-template-columns: 1fr; gap: 0.1rem; }
+}
+
+/* El texto del informe, alineado arriba con la hoja */
+#el-informe > .dos-columnas { align-items: start; }

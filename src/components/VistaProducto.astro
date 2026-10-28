@@ -74,7 +74,11 @@ const documentos = [
 <figure class="vista-producto">
   <div class="dispositivo">
     {captura ? (
-      <img class="captura-producto" src={captura.src} width={captura.ancho} height={captura.alto} alt={captura.pie} loading="lazy" decoding="async" />
+      <button class="captura-abrir" type="button" data-captura={captura.src} data-pie={captura.pie + ' · Datos de ejemplo'}
+              aria-label={'Ver en grande: ' + captura.pie}>
+        <img class="captura-producto" src={captura.src} width={captura.ancho} height={captura.alto} alt={captura.pie} loading="lazy" decoding="async" />
+        <span class="captura-lupa"><Icono nombre="pantalla" tam={16} /> Ver en grande</span>
+      </button>
     ) : (
     <div class="pantalla-producto">
 
