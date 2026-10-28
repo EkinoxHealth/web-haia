@@ -1,10 +1,18 @@
 ---
 // El entregable principal: el informe de reclamación. Las cifras son las de la
 // Clínica Demo (inventada), las mismas que salen en la captura de Kriba, para
-// que todo cuadre. Las cifras se sostienen entre sí:
-//   613 revisadas − 522 conciliadas = 91 líneas sin pareja
-//   + 78 que sí casaron pero se pagaron a la tarifa vieja (78 × 2,00 € = 156,00 €)
-//   = 169 líneas a reclamar. Si se toca una, hay que rehacer las demás. Va rotulado como ejemplo, bien visible.
+// que todo cuadre. Las cifras tienen que sumar A LA VISTA, sin que nadie
+// tenga que saber qué significa cada palabra:
+//
+//   613 revisadas = 444 conformes + 169 a reclamar
+//
+// Y las 169 salen de dos sitios distintos, que es lo que se descuadró antes:
+//   ·  91 no encuentran pareja en la liquidación (613 − 522 de la captura de Kriba)
+//   ·  78 sí la encuentran, pero pagadas a la tarifa vieja (78 × 2,00 € = 156,00 €)
+//
+// Ojo: «conformes» (444) no es lo mismo que «emparejadas» (522, lo que enseña
+// Kriba). Una línea puede casar y aun así estar mal pagada: 522 − 78 = 444.
+// Si se toca una cifra, hay que rehacer las demás. Va rotulado como ejemplo, bien visible.
 import Icono from '../components/Icono.astro';
 
 const lineas = [
@@ -56,8 +64,8 @@ const lineas = [
         <span class="informe__etiq">Líneas revisadas</span>
       </div>
       <div>
-        <span class="informe__cifra">522</span>
-        <span class="informe__etiq">Conciliadas</span>
+        <span class="informe__cifra">444</span>
+        <span class="informe__etiq">Conformes</span>
       </div>
       <div>
         <span class="informe__cifra informe__cifra--rojo">1.831,50 €</span>
